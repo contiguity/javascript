@@ -12,8 +12,7 @@ class Contiguity {
     constructor(token, debug = false) {
         this.token = token.trim();
         this.debug = debug;
-        // this.baseURL = "https://api.contiguity.co";
-        this.baseURL = "http://localhost:3000/api";
+        this.baseURL = "https://api.contiguity.co";
         this.orwellBaseURL = "https://orwell.contiguity.co";
     }
 
