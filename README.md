@@ -2,7 +2,7 @@
 <h1 align='center'>@contiguity/javascript</h1>
 
 <p align='center'>
-    <img display="inline-block" src="https://img.shields.io/npm/v/@contiguity/javascript?style=for-the-badge" /> <img display="inline-block"  src="https://img.shields.io/bundlephobia/minzip/@contiguity/javascript?style=for-the-badge" /> <img display="inline-block" src="https://img.shields.io/badge/Made%20with-JavaScript-yellow?style=for-the-badge" />
+    <img display="inline-block" src="https://img.shields.io/npm/v/@contiguity/javascript?style=for-the-badge" /> <img display="inline-block" src="https://img.shields.io/bundlephobia/minzip/@contiguity/javascript?style=for-the-badge" /> <img display="inline-block" src="https://img.shields.io/badge/Made%20with-JavaScript-yellow?style=for-the-badge" />
 </p>
 <p align='center'>Contiguity's official JavaScript SDK.</p>
 
@@ -26,7 +26,7 @@ You can also initialize it with the optional 'debug' flag:
 const client = contiguity.login("your token here", true)
 ```
 
-You can get your token from the Contiguity [dashboard](https://contiguity.co/dashboard)..
+You can get your token from the Contiguity [dashboard](https://contiguity.co/dashboard).
 
 ## Sending your first email 📤
 
@@ -51,7 +51,7 @@ const object = {
     recipient: "example@example.com",
     from: "Contiguity",
     subject: "My first email!",
-    text: "<b>I sent an email using Contiguity</b>"
+    text: "I sent an email using Contiguity"
 }
 
 await client.send.email(object)
