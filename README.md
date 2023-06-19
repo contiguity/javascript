@@ -15,7 +15,7 @@ $ npm install @contiguity/javascript
 $ yarn add @contiguity/javascript
 ```
 
-Then, import it & initialize it like this:
+Then, import & initialize it like this:
 ```js
 const contiguity = require('@contiguity/javascript')
 const client = contiguity.login("your token here")
