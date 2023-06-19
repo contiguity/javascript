@@ -1,0 +1,19 @@
+{
+  "name": "@contiguity/javascript",
+  "version": "1.0.0",
+  "description": "Contiguity's JavaScript SDK",
+  "main": "src/index.js",
+  "keywords": [
+    "sms",
+    "email",
+    "contiguity"
+  ],
+  "author": "Contiguity",
+  "license": "MIT",
+  "dependencies": {
+    "fs": "^0.0.1-security",
+    "html-minifier": "^4.0.0",
+    "isomorphic-unfetch": "^4.0.2",
+    "phone": "^3.1.37"
+  }
+}
