@@ -1,12 +1,13 @@
 {
   "name": "@contiguity/javascript",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Contiguity's JavaScript SDK",
   "main": "src/index.js",
   "keywords": [
     "sms",
     "email",
-    "contiguity"
+    "contiguity",
+    "otp"
   ],
   "author": "Contiguity",
   "license": "MIT",
