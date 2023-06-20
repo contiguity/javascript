@@ -1,0 +1,15 @@
+{
+    "name": "otp",
+    "version": "1.0.0",
+    "description": "An example of sending an OTP using Contiguity",
+    "main": "index.js",
+    "scripts": {
+        "test": "node index.js"
+    },
+    "author": "Contiguity",
+    "license": "MIT",
+    "dependencies": {
+        "@contiguity/javascript": "^1.0.1",
+        "readline": "^1.3.0"
+    }
+}
