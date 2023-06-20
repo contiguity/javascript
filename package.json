@@ -1,6 +1,6 @@
 {
   "name": "@contiguity/javascript",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Contiguity's JavaScript SDK",
   "main": "src/index.js",
   "keywords": [
@@ -16,5 +16,7 @@
     "html-minifier": "^4.0.0",
     "isomorphic-unfetch": "^4.0.2",
     "phone": "^3.1.37"
-  }
+  },
+  "repository": "https://github.com/use-contiguity/javascript.git",
+  "private": false
 }
