@@ -1,6 +1,6 @@
 {
   "name": "@contiguity/javascript",
-  "version": "1.0.6",
+  "version": "1.1.0",
   "description": "Contiguity's JavaScript SDK",
   "main": "src/index.js",
   "keywords": [
@@ -17,5 +17,10 @@
     "isomorphic-unfetch": "^4.0.2",
     "phone": "^3.1.37"
   },
-  "repository": "https://github.com/use-contiguity/javascript.git"
+  "repository": "https://github.com/use-contiguity/javascript.git",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/",
+    "@contiguity:registry": "https://npm.pkg.github.com/"
+  }
 }
