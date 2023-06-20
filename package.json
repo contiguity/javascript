@@ -1,6 +1,6 @@
 {
   "name": "@contiguity/javascript",
-  "version": "1.0.2",
+  "version": "1.0.2-yarn",
   "description": "Contiguity's JavaScript SDK",
   "main": "src/index.js",
   "keywords": [
@@ -19,7 +19,6 @@
   },
   "publishConfig": {
     "access": "public",
-    "registry": "https://registry.npmjs.org/",
     "@contiguity:registry": "https://npm.pkg.github.com/"
   }
 }
