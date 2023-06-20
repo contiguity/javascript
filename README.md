@@ -7,12 +7,9 @@
 <p align='center'>Contiguity's official JavaScript SDK.</p>
 
 ## Installation 🏗 & Setup 🛠
-You can install the SDK using either NPM or Yarn. 
+You can install the SDK using NPM. 
 ```shell
 $ npm install @contiguity/javascript
-```
-```shell
-$ yarn add @contiguity/javascript
 ```
 
 Then, import & initialize it like this:

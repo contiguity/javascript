@@ -17,6 +17,5 @@
     "isomorphic-unfetch": "^4.0.2",
     "phone": "^3.1.37"
   },
-  "repository": "https://github.com/use-contiguity/javascript.git",
-  "private": false
+  "repository": "https://github.com/use-contiguity/javascript.git"
 }
