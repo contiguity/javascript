@@ -1,6 +1,6 @@
 {
   "name": "@contiguity/javascript",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Contiguity's JavaScript SDK",
   "main": "src/index.js",
   "keywords": [
