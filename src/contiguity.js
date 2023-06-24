@@ -52,24 +52,24 @@ class Contiguity {
          * Send a text message.
          * @async
          * @param {object} object - The object containing the message details.
-         * @param {string} object.recipient - The recipient's phone number.
+         * @param {string} object.to - The recipient's phone number.
          * @param {string} object.message - The message to send.
          * @returns {Promise<object>} Returns the response object.
          * @throws {Error} Throws an error if required fields are missing or sending the message fails.
          */
         text: async (object) => {
             // Detailed error messages
-            if (!object.recipient) throw new Error("Contiguity requires a recipient to be specified.");
+            if (!object.to) throw new Error("Contiguity requires a recipient to be specified.");
             if (!object.message) throw new Error("Contiguity requires a message to be provided.");
             if (!this.token) throw new Error("Contiguity requires a token/API key to be provided via contiguity.login('token')");
 
-            const e164 = phone(object.recipient);
+            const e164 = phone(object.to);
             if (!e164.isValid) throw new Error("Contiguity requires and expects phone numbers to follow the E.164 ([+][country code][subscriber number]) format. @contiguity/javascript attempts to format numbers, however it has failed.");
 
             const textHandler = await fetch(`${this.baseURL}/send/text`, {
                 method: "POST",
                 body: JSON.stringify({
-                    recipient: e164.phoneNumber,
+                    to: e164.phoneNumber,
                     message: object.message,
                 }),
                 headers: {
@@ -81,7 +81,7 @@ class Contiguity {
             const textHandlerResponse = await textHandler.json();
 
             if (textHandler.status !== 200) throw new Error(`Contiguity couldn't send your message. Received: ${textHandler.status} with reason: "${textHandlerResponse.message}"`);
-            if (this.debug) console.log(`Contiguity successfully sent your text to ${object.recipient}. Crumbs:\n\n${JSON.stringify(textHandlerResponse)}`);
+            if (this.debug) console.log(`Contiguity successfully sent your text to ${object.to}. Crumbs:\n\n${JSON.stringify(textHandlerResponse)}`);
 
             return textHandlerResponse;
         },
@@ -90,11 +90,11 @@ class Contiguity {
          * Send an email.
          * @async
          * @param {object} object - The object containing the email details.
-         * @param {string} object.recipient - The recipient's email address.
+         * @param {string} object.to - The recipient's email address.
          * @param {string} object.from - The sender's name. The email address is selected automatically. Configure at contiguity.co/dashboard
          * @param {string} object.subject - The email subject.
-         * @param {string} object.text - The plain text email body. Provide one body, or HTML will be prioritized if both are present.
-         * @param {string} object.html - The HTML email body. Provide one body.
+         * @param {string} [object.text] - The plain text email body. Provide one body, or HTML will be prioritized if both are present.
+         * @param {string} [object.html] - The HTML email body. Provide one body.
          * @param {string} [object.replyTo] - (Optional) The reply-to email address.
          * @param {string} [object.cc] - (Optional) The CC email addresses.
          * @returns {Promise<object>} Returns the response object.
@@ -102,7 +102,7 @@ class Contiguity {
          */
         email: async (object) => {
             // Detailed error messages
-            if (!object.recipient) throw new Error("Contiguity requires a recipient to be specified.");
+            if (!object.to) throw new Error("Contiguity requires a recipient to be specified.");
             if (!object.from) throw new Error("Contiguity requires a sender (from) be specified.");
             if (!object.subject) throw new Error("Contiguity requires a subject to be specified.");
             if (!object.text && !object.html) throw new Error("Contiguity requires an email body (text or HTML) to be provided.");
@@ -111,7 +111,7 @@ class Contiguity {
             const emailHandler = await fetch(`${this.baseURL}/send/email`, {
                 method: "POST",
                 body: JSON.stringify({
-                    recipient: object.recipient,
+                    to: object.to,
                     from: object.from,
                     subject: object.subject,
                     body: object.html ? object.html : object.text,
@@ -129,7 +129,7 @@ class Contiguity {
             const emailHandlerResponse = await emailHandler.json();
 
             if (emailHandler.status !== 200) throw new Error(`Contiguity couldn't send your email. Received: ${emailHandler.status} with reason: "${emailHandlerResponse.message}"`);
-            if (this.debug) console.log(`Contiguity successfully sent your email to ${object.recipient}. Crumbs:\n\n${JSON.stringify(emailHandlerResponse)}`);
+            if (this.debug) console.log(`Contiguity successfully sent your email to ${object.to}. Crumbs:\n\n${JSON.stringify(emailHandlerResponse)}`);
 
             return emailHandlerResponse;
         },
@@ -216,7 +216,7 @@ class Contiguity {
          * Sends an OTP to the specified recipient.
          * @async
          * @param {object} object - The object containing the OTP details.
-         * @param {string} object.recipient - The recipient's phone number to send the OTP.
+         * @param {string} object.to - The recipient's phone number to send the OTP.
          * @param {string} object.language - The language to use for the OTP message.
          * @param {string} [object.name] - (Optional) specify who the OTP is for (e.g "Your [Contiguity] code is: 123456")
          * @returns {Promise<string>} Returns the OTP ID.
@@ -224,16 +224,16 @@ class Contiguity {
          */
         send: async (object) => {
             if (!this.token) throw new Error("Contiguity requires a token/API key to be provided via contiguity.login('token')");
-            if (!object.recipient) throw new Error("Contiguity requires a recipient to be specified.");
+            if (!object.to) throw new Error("Contiguity requires a recipient to be specified.");
             if (!object.language) throw new Error("Contiguity requires a language to be specified.");
 
-            const e164 = phone(object.recipient);
+            const e164 = phone(object.to);
             if (!e164.isValid) throw new Error("Contiguity requires and expects phone numbers to follow the E.164 ([+][country code][subscriber number]) format. @contiguity/javascript attempts to format numbers, however it has failed.");
 
             const otpHandler = await fetch(`${this.baseURL}/otp/new`, {
                 method: "POST",
                 body: JSON.stringify({
-                    recipient: e164.phoneNumber,
+                    to: e164.phoneNumber,
                     language: object.language,
                     name: object.name || undefined,
                 }),
@@ -246,7 +246,7 @@ class Contiguity {
             const otpHandlerResponse = await otpHandler.json();
 
             if (otpHandler.status !== 200) throw new Error(`Contiguity couldn't send your OTP. Received: ${otpHandler.status} with reason: "${otpHandlerResponse.message}"`);
-            if (this.debug) console.log(`Contiguity successfully sent your OTP to ${object.recipient} with OTP ID ${otpHandlerResponse.otp_id}`);
+            if (this.debug) console.log(`Contiguity successfully sent your OTP to ${object.to} with OTP ID ${otpHandlerResponse.otp_id}`);
 
             return otpHandlerResponse.otp_id;
         },
