@@ -63,7 +63,7 @@ _async/await is recommend, but technically not required._
 You can also fetch a local email template using `client.template.local(file)`:
 
 ```js
-const template = await client.template.local('templates/index.html')
+const template = await client.template.local('templates/first_email.html')
 
 const object = {
     to: "example@example.com",
