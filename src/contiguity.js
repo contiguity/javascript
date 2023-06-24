@@ -31,7 +31,7 @@ class Contiguity {
          * @returns {Promise<string>} - A promise that resolves to the minified contents of the local template.
          */
         local: async (file) => {
-            if (typeof "window" === "undefined") throw new Error("Getting contents from files is not supported in the browser.");
+            if (typeof window !== "undefined") throw new Error("Getting contents from files is not supported in the browser.");
             const fileContent = fs.readFileSync(file).toString();
             const mini = minify(fileContent, { html5: true, continueOnParseError: true });
             return mini;
