@@ -33,7 +33,7 @@ To begin sending an email with an HTML body, you can define a JSON object with a
 
 ```js
 const object = {
-    recipient: "example@example.com",
+    to: "example@example.com",
     from: "Contiguity",
     subject: "My first email!",
     html: "<b>I sent an email using Contiguity</b>"
@@ -45,7 +45,7 @@ await client.send.email(object)
 To send an email with a text body, it's very similar. Just switch "html" to "text".
 ```js
 const object = {
-    recipient: "example@example.com",
+    to: "example@example.com",
     from: "Contiguity",
     subject: "My first email!",
     text: "I sent an email using Contiguity"
@@ -63,20 +63,16 @@ _async/await is recommend, but technically not required._
 You can also fetch a local email template using `client.template.local(file)`:
 
 ```js
-async function sendEmail() {
-    const template = await client.template.local('templates/index.html')
+const template = await client.template.local('templates/first_email.html')
 
-    const object = {
-        recipient: "example@example.com",
-        from: "Contiguity",
-        subject: "My first email!",
-        html: template,
-    }
-
-    const sent = await client.send.email(object)
+const object = {
+    to: "example@example.com",
+    from: "Contiguity",
+    subject: "My first email!",
+    html: template,
 }
 
-sendEmail()
+await client.send.email(object)
 ```
 
 ## Sending your first text message 💬
@@ -87,11 +83,11 @@ To begin sending a text message, you can define a JSON object with all the requi
 
 ```js
 const object = {
-    recipient: "+15555555555",
+    to: "+15555555555",
     message: "My first text using Contiguity"
 }
 
-client.send.text(object)
+await client.send.text(object)
 ```
 
 **Note**: _Contiguity expects the recipient phone number to be formatted in E.164. You can attempt to pass numbers in formats like NANP, and the SDK will try its best to convert it. If it fails, it will throw an error!_
@@ -103,7 +99,7 @@ Contiguity aims to make communications extremely simple and elegant. In doing so
 To send your first OTP, first create one:
 ```js
 const otp_id = await client.otp.send({ 
-    recipient: "+15555555555", 
+    to: "+15555555555", 
     language: "en", 
     name: "Contiguity" 
 })

@@ -1,6 +1,6 @@
 {
   "name": "@contiguity/javascript",
-  "version": "1.0.6",
+  "version": "2.0.1",
   "description": "Contiguity's JavaScript SDK",
   "main": "src/index.js",
   "types": "dist/index.d.ts",
