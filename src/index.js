@@ -8,7 +8,7 @@ const Mock = require("./mock");
  * @param {boolean} [debug=false] - (Optional) A flag indicating whether to enable debug mode.
  * @throws {Error} - Throws an error if the token is empty.
  * @returns {Contiguity} - Returns an instance of the Contiguity class.
-*/
+ */
 function login(token, debug = false) {
     if (token.trim().length == 0) throw new Error(`Contiguity couldn't authenticate you: no token provided.`);
     // verify(token, debug)
@@ -17,15 +17,14 @@ function login(token, debug = false) {
 
 /**
  * Use Contiguity features in a sandbox mode, with simulated API responses.
- * @param {string} token - The authentication token (never used).
+ * @param {string} [token] - The authentication token (never used).
  * @returns {Mock} - Returns an instance of the Mock class.
-*/
+ */
 function mock(token) {
     return new Mock(token);
 }
 
 module.exports = { login, mock };
-
 
 /*async function verify(token, debug = false) {
     const res = await fetch(`https://api.contiguity.co/user/get/module_auth`, {
