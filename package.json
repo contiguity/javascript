@@ -1,0 +1,26 @@
+{
+    "name": "@contiguity/javascript",
+    "version": "3.0.0",
+    "module": "src/index.js",
+    "type": "module",
+    "description": "Contiguity's official JavaScript SDK",
+    "author": "Contiguity",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/contiguity/javascript.git"
+    },
+    "scripts": {
+        "publish": "bun publish --access public",
+        "dev": "bun run src/index.ts"
+    },
+    "git": {
+        "url": "https://github.com/contiguity/javascript.git"
+    },
+    "dependencies": {
+        "zod": "^4.0.17"
+    },
+    "devDependencies": {
+        "typescript": "^5.9.2"
+    }
+}
