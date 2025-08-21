@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { ContiguityResponse, ContiguityRawResponse } from "@/types/response";
+import { createResponse } from "@/types/base";
 import { SingleOrMultipleEmails } from "@/types/common";
 
 export const EmailSendRequest = z.object({
@@ -38,9 +38,8 @@ export const EmailResponse = z.object({
 	email_id: z.string(),
 })
 
-export const EmailSendResponseRaw = ContiguityRawResponse.extend({
-	data: EmailResponse,
-})
+// Using the new base response builder
+export const EmailSendResponse = createResponse(EmailResponse)
 
 export type EmailBodyParams = {
 	text?: string;
@@ -84,11 +83,7 @@ export type EmailSendResponseType = z.infer<typeof EmailResponse>;
  *   },
  *   cc: "manager@example.com",
  *   bcc: ["analytics@company.com"],
- *   reply_to: "support@yourcompany.com",
- *   headers: [
- *     { name: "X-Priority", value: "1" },
- *     { name: "X-Category", value: "newsletter" }
- *   ]
+ *   reply_to: "support@yourcompany.com"
  * });
  * console.log(`Email ID: ${response.email_id}`);
  * ```
@@ -104,7 +99,7 @@ export async function _emailSend(this: any, params: EmailSendParams): Promise<an
 		response,
 		schemas: {
 			sdk: EmailResponse,
-			raw: EmailSendResponseRaw
+			raw: EmailSendResponse.raw
 		}
 	});
 }

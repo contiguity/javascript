@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { ContiguityResponse, ContiguityRawResponse } from "@/types/response";
+import { createResponse } from "@/types/base";
 
 export const OTPResendRequest = z.object({
 	/** The OTP ID you received when sending the OTP */
@@ -11,13 +11,8 @@ export const OTPResendResponse = z.object({
 	resent: z.boolean(),
 })
 
-export const OTPResendResponseFlattened = ContiguityResponse.extend({
-	resent: z.boolean(),
-})
-
-export const OTPResendResponseRaw = ContiguityRawResponse.extend({
-	data: OTPResendResponse,
-})
+// Using the new base response builder
+export const OTPResendResponseBuilder = createResponse(OTPResendResponse)
 
 export type OTPResendParams = z.infer<typeof OTPResendRequest>;
 export type OTPResendResponse = z.infer<typeof OTPResendResponse>;
@@ -44,7 +39,7 @@ export async function _otpResend(this: any, params: OTPResendParams): Promise<an
 		response,
 		schemas: {
 			sdk: OTPResendResponse,
-			raw: OTPResendResponseRaw
+			raw: OTPResendResponseBuilder.raw
 		}
 	});
 }

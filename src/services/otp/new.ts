@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { ContiguityResponse, ContiguityRawResponse } from "@/types/response";
+import { createResponse } from "@/types/base";
 import { E164PhoneNumber } from "@/types/common";
 
 export const OTPNewRequest = z.object({
@@ -16,13 +16,8 @@ export const OTPNewResponse = z.object({
 	otp_id: z.string(),
 })
 
-export const OTPNewResponseFlattened = ContiguityResponse.extend({
-	otp_id: z.string(),
-})
-
-export const OTPNewResponseRaw = ContiguityRawResponse.extend({
-	data: OTPNewResponse,
-})
+// Using the new base response builder - this replaces the manual Flattened/Raw definitions
+export const OTPNewResponseBuilder = createResponse(OTPNewResponse)
 
 export type OTPNewParams = z.infer<typeof OTPNewRequest>;
 export type OTPNewResponse = z.infer<typeof OTPNewResponse>;
@@ -51,7 +46,7 @@ export async function _otpNew(this: any, params: OTPNewParams): Promise<any> {
 		response,
 		schemas: {
 			sdk: OTPNewResponse,
-			raw: OTPNewResponseRaw
+			raw: OTPNewResponseBuilder.raw
 		}
 	});
 }

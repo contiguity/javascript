@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { ContiguityResponse, ContiguityRawResponse } from "@/types/response";
+import { createResponse } from "@/types/base";
 import { E164PhoneNumber, OptionalSenderNumber, MessageContent, AttachmentList, createFallbackSchema } from "@/types/common";
 
 export const WhatsAppSendRequest = z.object({
@@ -20,13 +20,8 @@ export const WhatsAppResponse = z.object({
 	message_id: z.string(),
 })
 
-export const WhatsAppSendResponseFlattened = ContiguityResponse.extend({
-	message_id: z.string(),
-})
-
-export const WhatsAppSendResponseRaw = ContiguityRawResponse.extend({
-	data: WhatsAppResponse,
-})
+// Using the new base response builder - this replaces the manual Flattened/Raw definitions
+export const WhatsAppSendResponse = createResponse(WhatsAppResponse)
 
 export type WhatsAppFallbackParams = {
 	when: ("whatsapp_unsupported" | "whatsapp_fails")[];
@@ -78,7 +73,7 @@ export async function _whatsAppSend(this: any, params: WhatsAppSendParams): Prom
 		response,
 		schemas: {
 			sdk: WhatsAppResponse,
-			raw: WhatsAppSendResponseRaw
+			raw: WhatsAppSendResponse.raw
 		}
 	});
 }

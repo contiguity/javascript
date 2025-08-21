@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { ContiguityResponse, ContiguityRawResponse } from "@/types/response";
+import { createResponse } from "@/types/base";
 import { 
     NumberCapabilities, 
     NumberHealth, 
@@ -59,9 +59,8 @@ export const LeaseLeasedResponse = z.object({
 	numbers: z.array(LeasedNumber)
 });
 
-export const LeaseLeasedResponseRaw = ContiguityRawResponse.extend({
-	data: LeaseLeasedResponse,
-});
+// Using the new base response builder
+export const LeaseLeasedResponseBuilder = createResponse(LeaseLeasedResponse);
 
 export type LeaseLeasedResponseType = z.infer<typeof LeaseLeasedResponse>;
 export type LeasedNumberType = z.infer<typeof LeasedNumber>;
@@ -126,7 +125,7 @@ export async function _leasedNumbers(this: any): Promise<any> {
 		response,
 		schemas: {
 			sdk: LeaseLeasedResponse,
-			raw: LeaseLeasedResponseRaw
+			raw: LeaseLeasedResponseBuilder.raw
 		}
 	});
 }

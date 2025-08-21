@@ -5,6 +5,7 @@ export { Contiguity };
 export { ContiguityResponse, ContiguityRawResponse } from "@/types/response";
 export { ContiguityAPIError, ContiguityError, ContiguitySDKError } from "@/types/error";
 export type { ContiguityMetadata, WithMetadata } from "@/types/metadata";
+export { createResponse, BaseResponseBuilder, type BaseResponse, type FlattenedResponse, type RawResponse } from "@/types/base";
 export {
     E164PhoneNumber,
     MessageContent,
@@ -22,42 +23,30 @@ export {
 } from "@/types/common";
 export { 
     TextSendRequest, 
-    TextResponse, 
-    TextSendResponseFlattened,
-    TextSendResponseRaw 
+    TextResponse
 } from "@/services/text/send";
 export {
     EmailSendRequest,
-    EmailResponse,
-    EmailSendResponseRaw
+    EmailResponse
 } from "@/services/email/send";
 export {
     iMessageSendRequest,
-    iMessageResponse,
-    iMessageSendResponseFlattened,
-    iMessageSendResponseRaw
+    iMessageResponse
 } from "@/services/imessage/send";
 export {
     iMessageTypingRequest,
-    iMessageTypingResponse,
-    iMessageTypingResponseFlattened,
-    iMessageTypingResponseRaw
+    iMessageTypingResponse
 } from "@/services/imessage/typing";
 export {
     WhatsAppSendRequest,
-    WhatsAppResponse,
-    WhatsAppSendResponseFlattened,
-    WhatsAppSendResponseRaw
+    WhatsAppResponse
 } from "@/services/whatsapp/send";
 export {
     WhatsAppTypingRequest,
-    WhatsAppTypingResponse,
-    WhatsAppTypingResponseFlattened,
-    WhatsAppTypingResponseRaw
+    WhatsAppTypingResponse
 } from "@/services/whatsapp/typing";
 export {
     LeaseAvailableResponse,
-    LeaseAvailableResponseRaw,
     AvailableNumber,
     NumberCapabilities,
     NumberHealth,
@@ -68,51 +57,40 @@ export {
 } from "@/services/lease/available";
 export {
     LeaseGetRequest,
-    LeaseGetResponse,
-    LeaseGetResponseRaw
+    LeaseGetResponse
 } from "@/services/lease/get";
 export {
     LeaseCreateRequest,
     LeaseCreateResponse,
-    LeaseCreateResponseRaw,
     LeaseBillingPrice,
     LeaseBillingPeriod,
     LeaseBilling
 } from "@/services/lease/create";
 export {
     LeaseLeasedResponse,
-    LeaseLeasedResponseRaw,
     LeasedNumber,
     LeasedBillingPeriod,
     LeasedBilling
 } from "@/services/lease/leased";
 export {
     LeaseDetailsRequest,
-    LeaseDetailsResponse,
-    LeaseDetailsResponseRaw
+    LeaseDetailsResponse
 } from "@/services/lease/details";
 export {
     LeaseTerminateRequest,
-    LeaseTerminateResponse,
-    LeaseTerminateResponseRaw
+    LeaseTerminateResponse
 } from "@/services/lease/terminate";
 export {
     OTPNewRequest,
-    OTPNewResponse,
-    OTPNewResponseFlattened,
-    OTPNewResponseRaw
+    OTPNewResponse
 } from "@/services/otp/new";
 export {
     OTPVerifyRequest,
-    OTPVerifyResponse,
-    OTPVerifyResponseFlattened,
-    OTPVerifyResponseRaw
+    OTPVerifyResponse
 } from "@/services/otp/verify";
 export {
     OTPResendRequest,
-    OTPResendResponse,
-    OTPResendResponseFlattened,
-    OTPResendResponseRaw
+    OTPResendResponse
 } from "@/services/otp/resend";
 export {
     DomainsListResponse,
@@ -121,22 +99,16 @@ export {
 export {
     DomainsGetRequest,
     DomainsGetResponse,
-    DomainsGetResponseFlattened,
-    DomainsGetResponseRaw,
     DNSRecord,
     DomainVerifications
 } from "@/services/domains/get";
 export {
     DomainsRegisterRequest,
-    DomainsRegisterResponse,
-    DomainsRegisterResponseFlattened,
-    DomainsRegisterResponseRaw
+    DomainsRegisterResponse
 } from "@/services/domains/register";
 export {
     DomainsDeleteRequest,
-    DomainsDeleteResponse,
-    DomainsDeleteResponseFlattened,
-    DomainsDeleteResponseRaw
+    DomainsDeleteResponse
 } from "@/services/domains/delete";
 
 export default Contiguity;

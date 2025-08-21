@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { ContiguityResponse, ContiguityRawResponse } from "@/types/response";
+import { createResponse } from "@/types/base";
 
 // DNS Record schemas based on OpenAPI spec
 export const DNSRecord = z.object({
@@ -53,20 +53,8 @@ export const DomainsGetResponse = z.object({
 	verifications: DomainVerifications,
 });
 
-export const DomainsGetResponseFlattened = ContiguityResponse.extend({
-	domain: z.string(),
-	status: z.string(),
-	id: z.string(),
-	created_at: z.number(),
-	records: z.array(DNSRecords),
-	region: z.string(),
-	sending_allowed: z.boolean(),
-	verifications: DomainVerifications,
-});
-
-export const DomainsGetResponseRaw = ContiguityRawResponse.extend({
-	data: DomainsGetResponse,
-});
+// Using the new base response builder - this replaces the manual Flattened/Raw definitions
+export const DomainsGetResponseBuilder = createResponse(DomainsGetResponse);
 
 export type DomainsGetParams = z.infer<typeof DomainsGetRequest>;
 export type DomainsGetResponse = z.infer<typeof DomainsGetResponse>;
@@ -114,7 +102,7 @@ export async function _domainsGet(this: any, params: DomainsGetParams): Promise<
 		response,
 		schemas: {
 			sdk: DomainsGetResponse,
-			raw: DomainsGetResponseRaw
+			raw: DomainsGetResponseBuilder.raw
 		}
 	});
 }

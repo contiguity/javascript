@@ -100,7 +100,7 @@ export class ContiguityClient {
      * This method handles the complex logic of parsing different response formats
      * from the Contiguity API and normalizing them consistently.
      */
-    parse<T extends z.ZodTypeAny, R extends z.ZodTypeAny>({
+    parse<T extends z.ZodType, R extends z.ZodType>({
         response,
         schemas: { sdk, raw }
     }: {

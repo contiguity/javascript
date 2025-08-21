@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { ContiguityResponse, ContiguityRawResponse } from "@/types/response";
+import { createResponse } from "@/types/base";
 
 export const NumberCapabilities = z.object({
 	/** International SMS support (generally only T-Mobile numbers support this) */
@@ -77,9 +77,8 @@ export const LeaseAvailableResponse = z.object({
 	numbers: z.array(AvailableNumber)
 });
 
-export const LeaseAvailableResponseRaw = ContiguityRawResponse.extend({
-	data: LeaseAvailableResponse,
-});
+// Using the new base response builder
+export const LeaseAvailableResponseBuilder = createResponse(LeaseAvailableResponse);
 
 export type LeaseAvailableResponseType = z.infer<typeof LeaseAvailableResponse>;
 export type AvailableNumberType = z.infer<typeof AvailableNumber>;
@@ -118,7 +117,7 @@ export async function _leaseAvailable(this: any): Promise<any> {
 		response,
 		schemas: {
 			sdk: LeaseAvailableResponse,
-			raw: LeaseAvailableResponseRaw
+			raw: LeaseAvailableResponseBuilder.raw
 		}
 	});
 }

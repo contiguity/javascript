@@ -3,7 +3,7 @@ import { z } from "zod";
 /**
  * Standard request function factory - reduces duplication across services
  */
-export function createRequestFunction<TRequest extends z.ZodTypeAny, TResponse extends z.ZodTypeAny, TRawResponse extends z.ZodTypeAny>(
+export function createRequestFunction<TRequest extends z.ZodType, TResponse extends z.ZodType, TRawResponse extends z.ZodType>(
     requestSchema: TRequest,
     responseSchema: TResponse,
     rawResponseSchema: TRawResponse,

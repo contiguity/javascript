@@ -5,7 +5,7 @@ import { z } from "zod";
  * This utility handles the complex logic of parsing different response formats
  * from the Contiguity API and normalizing them consistently.
  */
-export function parseContiguityResponse<T extends z.ZodTypeAny, R extends z.ZodTypeAny>(
+export function parseContiguityResponse<T extends z.ZodType, R extends z.ZodType>(
     response: any,
     dataSchema: T,
     rawResponseSchema: R,

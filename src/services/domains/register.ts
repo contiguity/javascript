@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { ContiguityResponse, ContiguityRawResponse } from "@/types/response";
+import { createResponse } from "@/types/base";
 import { DNSRecords } from "./get";
 
 export const DomainsRegisterRequest = z.object({
@@ -22,16 +22,8 @@ export const DomainsRegisterResponse = z.object({
 	created_at: z.number(),
 });
 
-export const DomainsRegisterResponseFlattened = ContiguityResponse.extend({
-	records: z.array(DNSRecords),
-	status: z.string(),
-	region: z.string(),
-	created_at: z.number(),
-});
-
-export const DomainsRegisterResponseRaw = ContiguityRawResponse.extend({
-	data: DomainsRegisterResponse,
-});
+// Using the new base response builder
+export const DomainsRegisterResponseBuilder = createResponse(DomainsRegisterResponse);
 
 export type DomainsRegisterParams = z.infer<typeof DomainsRegisterRequest>;
 export type DomainsRegisterResponse = z.infer<typeof DomainsRegisterResponse>;
@@ -84,7 +76,7 @@ export async function _domainsRegister(this: any, params: DomainsRegisterParams)
 		response,
 		schemas: {
 			sdk: DomainsRegisterResponse,
-			raw: DomainsRegisterResponseRaw
+			raw: DomainsRegisterResponseBuilder.raw
 		}
 	});
 }

@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { ContiguityResponse, ContiguityRawResponse } from "@/types/response";
+import { createResponse } from "@/types/base";
 import { E164PhoneNumber, OptionalSenderNumber, MessageContent } from "@/types/common";
 
 export const TextSendRequest = z.object({
@@ -16,13 +16,8 @@ export const TextResponse = z.object({
 	message_id: z.string(),
 })
 
-export const TextSendResponseFlattened = ContiguityResponse.extend({
-	message_id: z.string(),
-})
-
-export const TextSendResponseRaw = ContiguityRawResponse.extend({
-	data: TextResponse,
-})
+// Using the new base response builder - this replaces the manual Flattened/Raw definitions
+export const TextSendResponse = createResponse(TextResponse)
 
 export type TextSendParams = z.infer<typeof TextSendRequest>;
 export type TextSendResponse = z.infer<typeof TextResponse>;
@@ -50,7 +45,7 @@ export async function _textSend(this: any, params: TextSendParams): Promise<any>
 		response,
 		schemas: {
 			sdk: TextResponse,
-			raw: TextSendResponseRaw
+			raw: TextSendResponse.raw
 		}
 	});
 }

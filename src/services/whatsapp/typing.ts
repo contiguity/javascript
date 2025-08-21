@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { ContiguityResponse, ContiguityRawResponse } from "@/types/response";
+import { createResponse } from "@/types/base";
 import { E164PhoneNumber, OptionalSenderNumber, TypingAction } from "@/types/common";
 
 export const WhatsAppTypingRequest = z.object({
@@ -16,13 +16,8 @@ export const WhatsAppTypingResponse = z.object({
 	status: z.string(),
 })
 
-export const WhatsAppTypingResponseFlattened = ContiguityResponse.extend({
-	status: z.string(),
-})
-
-export const WhatsAppTypingResponseRaw = ContiguityRawResponse.extend({
-	data: WhatsAppTypingResponse,
-})
+// Using the new base response builder
+export const WhatsAppTypingResponseBuilder = createResponse(WhatsAppTypingResponse)
 
 export type WhatsAppTypingParams = z.infer<typeof WhatsAppTypingRequest>;
 export type WhatsAppTypingResponseType = z.infer<typeof WhatsAppTypingResponse>;
@@ -62,7 +57,7 @@ export async function _whatsAppTyping(this: any, params: WhatsAppTypingParams): 
 		response,
 		schemas: {
 			sdk: WhatsAppTypingResponse,
-			raw: WhatsAppTypingResponseRaw
+			raw: WhatsAppTypingResponseBuilder.raw
 		}
 	});
 }

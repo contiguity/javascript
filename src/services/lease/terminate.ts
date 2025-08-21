@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { ContiguityResponse, ContiguityRawResponse } from "@/types/response";
+import { createResponse } from "@/types/base";
 
 export const LeaseTerminateRequest = z.object({
 	/** Phone number in E.164 format to terminate lease for */
@@ -17,9 +17,8 @@ export const LeaseTerminateResponse = z.object({
 	terminated_at: z.number()
 });
 
-export const LeaseTerminateResponseRaw = ContiguityRawResponse.extend({
-	data: LeaseTerminateResponse,
-});
+// Using the new base response builder
+export const LeaseTerminateResponseBuilder = createResponse(LeaseTerminateResponse);
 
 export type LeaseTerminateParams = z.infer<typeof LeaseTerminateRequest>;
 export type LeaseTerminateResponseType = z.infer<typeof LeaseTerminateResponse>;
@@ -87,7 +86,7 @@ export async function _leaseTerminate(this: any, params: LeaseTerminateParams): 
 		response,
 		schemas: {
 			sdk: LeaseTerminateResponse,
-			raw: LeaseTerminateResponseRaw
+			raw: LeaseTerminateResponseBuilder.raw
 		}
 	});
 }

@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { ContiguityResponse, ContiguityRawResponse } from "@/types/response";
+import { createResponse } from "@/types/base";
 
 export const LeaseCreateRequest = z.object({
 	/** Phone number in E.164 format to lease */
@@ -44,9 +44,8 @@ export const LeaseCreateResponse = z.object({
 	billing: LeaseBilling
 });
 
-export const LeaseCreateResponseRaw = ContiguityRawResponse.extend({
-	data: LeaseCreateResponse,
-});
+// Using the new base response builder
+export const LeaseCreateResponseBuilder = createResponse(LeaseCreateResponse);
 
 export type LeaseCreateParams = z.infer<typeof LeaseCreateRequest>;
 export type LeaseCreateResponseType = z.infer<typeof LeaseCreateResponse>;
@@ -92,7 +91,7 @@ export async function _leaseCreate(this: any, params: LeaseCreateParams): Promis
 		response,
 		schemas: {
 			sdk: LeaseCreateResponse,
-			raw: LeaseCreateResponseRaw
+			raw: LeaseCreateResponseBuilder.raw
 		}
 	});
 }

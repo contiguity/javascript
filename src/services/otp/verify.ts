@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { ContiguityResponse, ContiguityRawResponse } from "@/types/response";
+import { createResponse } from "@/types/base";
 
 export const OTPVerifyRequest = z.object({
 	/** The OTP ID you received when sending the OTP */
@@ -13,13 +13,8 @@ export const OTPVerifyResponse = z.object({
 	verified: z.boolean(),
 })
 
-export const OTPVerifyResponseFlattened = ContiguityResponse.extend({
-	verified: z.boolean(),
-})
-
-export const OTPVerifyResponseRaw = ContiguityRawResponse.extend({
-	data: OTPVerifyResponse,
-})
+// Using the new base response builder
+export const OTPVerifyResponseBuilder = createResponse(OTPVerifyResponse)
 
 export type OTPVerifyParams = z.infer<typeof OTPVerifyRequest>;
 export type OTPVerifyResponse = z.infer<typeof OTPVerifyResponse>;
@@ -47,7 +42,7 @@ export async function _otpVerify(this: any, params: OTPVerifyParams): Promise<an
 		response,
 		schemas: {
 			sdk: OTPVerifyResponse,
-			raw: OTPVerifyResponseRaw
+			raw: OTPVerifyResponseBuilder.raw
 		}
 	});
 }
