@@ -1,87 +1,78 @@
 <p align='center'><img src="https://contiguity.co/assets/icon-black.png" height="150px"/></p>
-<h1 align='center'>contiguity</h1>
+<h1 align='center'>Contiguity JavaScript SDK</h1>
 
 <p align='center'>
     <img display="inline-block" src="https://img.shields.io/npm/v/contiguity?style=for-the-badge" />
     <img display="inline-block" src="https://img.shields.io/badge/Made%20with-TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" />
 </p>
-<p align='center'>Contiguity's official TypeScript SDK.</p>
 
-## 🚀 Quick Start
+<p align='center'>The official TypeScript/JavaScript SDK for Contiguity's APIs.</p>
 
-### Installation
+## Installation
 
 ```bash
-# Using Bun (recommended)
-bun add contiguity
-
 # Using npm
 npm install contiguity
 
-# Using pnpm
+# Using pnpm  
 pnpm add contiguity
+
+# Using bun
+bun add contiguity
 ```
 
-### Initialize
+## Getting Started
 
 ```typescript
 import { Contiguity } from 'contiguity';
 
-const client = new Contiguity('your-api-token');
+const contiguity = new Contiguity('contiguity_sk_...your_token...');
 ```
 
 Get your API token from the [Contiguity Console](https://console.contiguity.com/).
 
-## 📚 Documentation
-
-For complete documentation, examples, and API reference:
-
-**👉 [Visit our full documentation](https://docs.contiguity.com/sdk/js)**
-
-## 🔗 Links
-
-- **[Full Documentation](https://docs.contiguity.com/sdk/js)** - Complete guides and examples
-- **[API Reference](https://docs.contiguity.com/api-reference/)** - Detailed API documentation
-- **[Dashboard](https://console.contiguity.com/)** - Manage your account
-- **[Discord](https://discord.gg/Z9K5XAsS7H)** - Join our community!
-- **[GitHub](https://github.com/contiguity/javascript)** - Source code and issues
-
-## ⚡ Quick Examples
+### Send a text message
 
 ```typescript
-// Send a text message
-const textResponse = await client.text.send({
+const response = await contiguity.text.send({
     to: "+1234567890",
     message: "Hello from Contiguity!"
 });
 ```
 
+### Send an email  
+
 ```typescript
-// Send an email
-const emailResponse = await client.email.send({
-    to: "user@example.com",
-    from: "Your App",
+const response = await contiguity.email.send({
+    to: "user@example.com", 
+    from: "Your App <no-reply@yourapp.com>",
     subject: "Welcome!",
-    html: "<h1>Hello from Contiguity!</h1>"
+    body: { text: "Welcome to our platform!" }
 });
 ```
 
+### Send and verify OTP
+
 ```typescript
-// Send and verify OTP
-const otpResponse = await client.otp.new({
+const otpResponse = await contiguity.otp.send({
     to: "+1234567890",
     language: "en",
     name: "MyApp"
 });
 
-const verification = await client.otp.verify({
+const verification = await contiguity.otp.verify({
     otp_id: otpResponse.otp_id,
     otp: "123456"
 });
 ```
 
-For more examples and detailed usage, check out our [complete documentation](https://docs.contiguity.com/sdk/js).
+## Documentation
 
----
+For complete documentation, examples, and API reference, visit [docs.contiguity.com](https://docs.contiguity.com/sdk/js/overview).
 
-<p align='center'>Made with ❤️ by Contiguity</p>
+## Resources
+
+- [API Reference](https://docs.contiguity.com/api-reference/) - Complete API documentation
+- [Console](https://console.contiguity.com/) - Manage your account and API keys  
+- [Discord Community](https://discord.gg/Z9K5XAsS7H) - Get support and connect with other developers
+- [GitHub Repository](https://github.com/contiguity/javascript) - Source code and issue tracking

@@ -32,6 +32,7 @@
         "type": "git",
         "url": "https://github.com/contiguity/javascript.git"
     },
+    "documentation": "https://docs.contiguity.com/sdk/js/overview",
     "scripts": {
         "publish": "bun publish --access public",
         "dev": "bun run src/index.ts",
