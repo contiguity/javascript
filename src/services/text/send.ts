@@ -1,13 +1,14 @@
 import { z } from "zod";
 import { ContiguityResponse, ContiguityRawResponse } from "@/types/response.ts";
+import { E164PhoneNumber, OptionalSenderNumber, MessageContent } from "@/types/common.ts";
 
 export const TextSendRequest = z.object({
 	/** Recipient's phone number. Must be in E.164 format */
-	to: z.string().regex(/^\+[1-9]\d{1,14}$/, "Phone number must be in E.164 format"),
+	to: E164PhoneNumber,
 	/** If you lease a phone number from Contiguity, you can use a specific one by providing it here */
-	from: z.string().optional(),
+	from: OptionalSenderNumber,
 	/** The text message to send */
-	message: z.string().min(1, "Message cannot be empty"),
+	message: MessageContent,
 })
 
 export const TextResponse = z.object({

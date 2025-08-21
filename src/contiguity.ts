@@ -1,5 +1,8 @@
 import { TextService } from "@/services/text/index.ts";
 import { EmailService } from "@/services/email/index.ts";
+import { iMessageService } from "@/services/imessage/index.ts";
+import { WhatsAppService } from "@/services/whatsapp/index.ts";
+import { LeaseService } from "@/services/lease/index.ts";
 import { ContiguitySDKError } from "@/types/error.ts";
 
 /**
@@ -16,12 +19,33 @@ import { ContiguitySDKError } from "@/types/error.ts";
  *   to: "+1234567890",
  *   message: "Hello from Contiguity!"
  * });
+ * 
+ * // Send an iMessage
+ * const imessageResponse = await contiguity.imessage.send({
+ *   to: "+1234567890",
+ *   message: "Hello via iMessage!"
+ * });
+ * 
+ * // Send a WhatsApp message
+ * const whatsappResponse = await contiguity.whatsapp.send({
+ *   to: "+1234567890",
+ *   message: "Hello via WhatsApp!"
+ * });
+ * 
+ * // Lease a phone number
+ * const availableNumbers = await contiguity.lease.available();
+ * const leaseResponse = await contiguity.lease.create({
+ *   number: availableNumbers.numbers[0].id
+ * });
  * ```
  */
 export class Contiguity {
     private readonly token: string;
     public readonly text: TextService;
     public readonly email: EmailService;
+    public readonly imessage: iMessageService;
+    public readonly whatsapp: WhatsAppService;
+    public readonly lease: LeaseService;
 
     /**
      * Create a new Contiguity client instance
@@ -58,8 +82,13 @@ export class Contiguity {
         }
 
         this.token = token.trim();
+        // add new services here
         this.text = new TextService(this.token);
         this.email = new EmailService(this.token);
+        this.imessage = new iMessageService(this.token);
+        this.whatsapp = new WhatsAppService(this.token);
+        this.lease = new LeaseService(this.token);
+
     }
 
     /**
@@ -67,6 +96,7 @@ export class Contiguity {
      * @returns True if the client is ready to use
      */
     ready(): boolean {
-        return !!(this.token && this.text && this.email);
+        const products = [this.text, this.email, this.imessage, this.whatsapp, this.lease];
+        return products.every(product => product !== undefined);
     }
 }

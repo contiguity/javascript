@@ -1,12 +1,10 @@
 import { z } from "zod";
 import { ContiguityResponse, ContiguityRawResponse } from "@/types/response.ts";
+import { SingleOrMultipleEmails } from "@/types/common.ts";
 
 export const EmailSendRequest = z.object({
 	/** Recipient email address(es). Can be a string or array of up to 10 addresses */
-	to: z.union([
-		z.email("Must be a valid email address"),
-		z.array(z.email("Must be a valid email address")).max(10, "Maximum 10 email addresses allowed")
-	]),
+	to: SingleOrMultipleEmails(10, "email"),
 	/** Provide either just your sender name (and use Contiguity's email) or provide your sender name and email (has to be verified in the Console) */
 	from: z.string().min(1, "From field cannot be empty"),
 	/** Subject of the email */
@@ -24,15 +22,9 @@ export const EmailSendRequest = z.object({
 	/** Reply-to email address */
 	reply_to: z.string().email("Must be a valid email address").optional(),
 	/** Carbon copy email address(es). Can be a string or array of up to 10 addresses */
-	cc: z.union([
-		z.string().email("Must be a valid email address"),
-		z.array(z.string().email("Must be a valid email address")).max(10, "Maximum 10 email addresses allowed")
-	]).optional(),
+	cc: SingleOrMultipleEmails(10, "email").optional(),
 	/** Blind carbon copy email address(es). Can be a string or array of up to 10 addresses */
-	bcc: z.union([
-		z.string().email("Must be a valid email address"),
-		z.array(z.string().email("Must be a valid email address")).max(10, "Maximum 10 email addresses allowed")
-	]).optional(),
+	bcc: SingleOrMultipleEmails(10, "email").optional(),
 	/** Custom email headers */
 	headers: z.array(z.object({
 		/** Header name */

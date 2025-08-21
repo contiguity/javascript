@@ -56,11 +56,6 @@ export class ContiguitySDKError extends Error {
         this.message = message;
         this.status = status;
         this.name = '[Contiguity SDK Error]';
-        
-        // Hide the ContiguitySDKError constructor from stack trace
-        if (Error.captureStackTrace) {
-            Error.captureStackTrace(this, ContiguitySDKError);
-        }
     }
 
     override toString() {
