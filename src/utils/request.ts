@@ -22,7 +22,7 @@ export function createRequestFunction<TRequest extends z.ZodTypeAny, TResponse e
             if (endpoint.includes('{') && endpoint.includes('}')) {
                 // Extract path parameter name (e.g., "{number}" -> "number")
                 const pathParamMatch = endpoint.match(/\{(\w+)\}/);
-                if (pathParamMatch) {
+                if (pathParamMatch && pathParamMatch[1] && validatedParams && typeof validatedParams === 'object') {
                     const pathParam = pathParamMatch[1];
                     const pathValue = (validatedParams as any)[pathParam];
                     if (pathValue) {

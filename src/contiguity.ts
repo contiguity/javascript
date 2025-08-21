@@ -3,6 +3,8 @@ import { EmailService } from "@/services/email/index.ts";
 import { iMessageService } from "@/services/imessage/index.ts";
 import { WhatsAppService } from "@/services/whatsapp/index.ts";
 import { LeaseService } from "@/services/lease/index.ts";
+import { OTPService } from "@/services/otp/index.ts";
+import { DomainsService } from "@/services/domains/index.ts";
 import { ContiguitySDKError } from "@/types/error.ts";
 
 /**
@@ -37,6 +39,24 @@ import { ContiguitySDKError } from "@/types/error.ts";
  * const leaseResponse = await contiguity.lease.create({
  *   number: availableNumbers.numbers[0].id
  * });
+ * 
+ * // Send and verify OTP
+ * const otpResponse = await contiguity.otp.new({
+ *   to: "+1234567890",
+ *   language: "en",
+ *   name: "MyApp"
+ * });
+ * const verification = await contiguity.otp.verify({
+ *   otp_id: otpResponse.otp_id,
+ *   otp: "123456"
+ * });
+ * 
+ * // Manage email domains
+ * const domainsList = await contiguity.domains.list();
+ * const registerResponse = await contiguity.domains.register({
+ *   domain: "example.com",
+ *   region: "us-east-1"
+ * });
  * ```
  */
 export class Contiguity {
@@ -46,6 +66,8 @@ export class Contiguity {
     public readonly imessage: iMessageService;
     public readonly whatsapp: WhatsAppService;
     public readonly lease: LeaseService;
+    public readonly otp: OTPService;
+    public readonly domains: DomainsService;
 
     /**
      * Create a new Contiguity client instance
@@ -88,6 +110,8 @@ export class Contiguity {
         this.imessage = new iMessageService(this.token);
         this.whatsapp = new WhatsAppService(this.token);
         this.lease = new LeaseService(this.token);
+        this.otp = new OTPService(this.token);
+        this.domains = new DomainsService(this.token);
 
     }
 
@@ -96,7 +120,7 @@ export class Contiguity {
      * @returns True if the client is ready to use
      */
     ready(): boolean {
-        const products = [this.text, this.email, this.imessage, this.whatsapp, this.lease];
+        const products = [this.text, this.email, this.imessage, this.whatsapp, this.lease, this.otp, this.domains];
         return products.every(product => product !== undefined);
     }
 }

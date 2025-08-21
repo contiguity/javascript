@@ -1,11 +1,24 @@
 {
-    "name": "@contiguity/javascript",
-    "version": "3.0.0",
+    "name": "contiguity",
+    "version": "0.0.1",
     "module": "src/index.ts",
     "type": "module",
     "description": "Contiguity's official JavaScript SDK",
     "author": "Contiguity",
     "license": "MIT",
+    "keywords": [
+        "contiguity",
+        "sms",
+        "email",
+        "whatsapp",
+        "imessage",
+        "otp",
+        "domains"
+    ],
+    "homepage": "https://contiguity.com",
+    "bugs": {
+        "url": "https://github.com/contiguity/javascript/issues"
+    },
     "repository": {
         "type": "git",
         "url": "https://github.com/contiguity/javascript.git"
@@ -14,10 +27,8 @@
         "publish": "bun publish --access public",
         "dev": "bun run src/index.ts",
         "build": "bun build src/index.ts --outdir=dist --format=esm --target=node",
-        "typecheck": "bunx tsc --noEmit"
-    },
-    "git": {
-        "url": "https://github.com/contiguity/javascript.git"
+        "typecheck": "bunx tsc --noEmit",
+        "update-deps": "npx npm-check-updates"
     },
     "dependencies": {
         "zod": "^4.0.17"

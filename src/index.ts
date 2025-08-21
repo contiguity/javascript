@@ -96,5 +96,47 @@ export {
     LeaseTerminateResponse,
     LeaseTerminateResponseRaw
 } from "@/services/lease/terminate.ts";
+export {
+    OTPNewRequest,
+    OTPNewResponse,
+    OTPNewResponseFlattened,
+    OTPNewResponseRaw
+} from "@/services/otp/new.ts";
+export {
+    OTPVerifyRequest,
+    OTPVerifyResponse,
+    OTPVerifyResponseFlattened,
+    OTPVerifyResponseRaw
+} from "@/services/otp/verify.ts";
+export {
+    OTPResendRequest,
+    OTPResendResponse,
+    OTPResendResponseFlattened,
+    OTPResendResponseRaw
+} from "@/services/otp/resend.ts";
+export {
+    DomainsListResponse,
+    DomainInfo
+} from "@/services/domains/list.ts";
+export {
+    DomainsGetRequest,
+    DomainsGetResponse,
+    DomainsGetResponseFlattened,
+    DomainsGetResponseRaw,
+    DNSRecord,
+    DomainVerifications
+} from "@/services/domains/get.ts";
+export {
+    DomainsRegisterRequest,
+    DomainsRegisterResponse,
+    DomainsRegisterResponseFlattened,
+    DomainsRegisterResponseRaw
+} from "@/services/domains/register.ts";
+export {
+    DomainsDeleteRequest,
+    DomainsDeleteResponse,
+    DomainsDeleteResponseFlattened,
+    DomainsDeleteResponseRaw
+} from "@/services/domains/delete.ts";
 
 export default Contiguity;
