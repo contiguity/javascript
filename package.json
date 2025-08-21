@@ -1,6 +1,6 @@
 {
     "name": "contiguity",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "type": "module",
     "description": "Contiguity's official TypeScript SDK",
     "author": "Contiguity",
@@ -22,7 +22,9 @@
         "whatsapp",
         "imessage",
         "otp",
-        "domains"
+        "send texts",
+        "api",
+        "sdk"
     ],
     "homepage": "https://contiguity.com",
     "bugs": {
