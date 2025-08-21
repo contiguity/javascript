@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { ContiguityResponse, ContiguityRawResponse } from "@/types/response.ts";
-import { SingleOrMultipleEmails } from "@/types/common.ts";
+import { ContiguityResponse, ContiguityRawResponse } from "@/types/response";
+import { SingleOrMultipleEmails } from "@/types/common";
 
 export const EmailSendRequest = z.object({
 	/** Recipient email address(es). Can be a string or array of up to 10 addresses */

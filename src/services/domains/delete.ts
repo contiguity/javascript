@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { ContiguityResponse, ContiguityRawResponse } from "@/types/response.ts";
+import { ContiguityResponse, ContiguityRawResponse } from "@/types/response";
 
 export const DomainsDeleteRequest = z.object({
 	/** Domain name to delete */

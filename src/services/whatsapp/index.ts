@@ -1,13 +1,13 @@
-import { ContiguityClient } from "@/client/fetch.ts";
-import { _whatsAppSend } from "@/services/whatsapp/send.ts";
-import { _whatsAppTyping } from "@/services/whatsapp/typing.ts";
+import { ContiguityClient } from "@/client/fetch";
+import { _whatsAppSend } from "@/services/whatsapp/send";
+import { _whatsAppTyping } from "@/services/whatsapp/typing";
 import { z } from "zod";
 import { 
     WhatsAppSendRequest, 
     WhatsAppResponse
-} from "@/services/whatsapp/send.ts";
-import { WhatsAppTypingRequest, WhatsAppTypingResponse } from "@/services/whatsapp/typing.ts";
-import type { WithMetadata } from "@/types/metadata.ts";
+} from "@/services/whatsapp/send";
+import { WhatsAppTypingRequest, WhatsAppTypingResponse } from "@/services/whatsapp/typing";
+import type { WithMetadata } from "@/types/metadata";
 
 export type WhatsAppSendParams = z.infer<typeof WhatsAppSendRequest>;
 export type WhatsAppSendResponse = z.infer<typeof WhatsAppResponse>;

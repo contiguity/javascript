@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { ContiguityResponse, ContiguityRawResponse } from "@/types/response.ts";
+import { ContiguityResponse, ContiguityRawResponse } from "@/types/response";
 
 export const NumberCapabilities = z.object({
 	/** International SMS support (generally only T-Mobile numbers support this) */

@@ -1,8 +1,8 @@
-import { ContiguityClient } from "@/client/fetch.ts";
-import { _emailSend } from "@/services/email/send.ts";
+import { ContiguityClient } from "@/client/fetch";
+import { _emailSend } from "@/services/email/send";
 import { z } from "zod";
-import { EmailSendRequest, EmailResponse } from "@/services/email/send.ts";
-import type { WithMetadata } from "@/types/metadata.ts";
+import { EmailSendRequest, EmailResponse } from "@/services/email/send";
+import type { WithMetadata } from "@/types/metadata";
 
 export type EmailSendParams = z.infer<typeof EmailSendRequest>;
 export type EmailSendResponse = z.infer<typeof EmailResponse>;

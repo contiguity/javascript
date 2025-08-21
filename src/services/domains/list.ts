@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { ContiguityResponse, ContiguityRawResponse } from "@/types/response.ts";
+import { ContiguityResponse, ContiguityRawResponse } from "@/types/response";
 
 // Domain object schema based on OpenAPI spec
 export const DomainInfo = z.object({

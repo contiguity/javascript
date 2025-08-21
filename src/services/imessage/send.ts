@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { ContiguityResponse, ContiguityRawResponse } from "@/types/response.ts";
-import { E164PhoneNumber, OptionalSenderNumber, MessageContent, AttachmentList, createFallbackSchema } from "@/types/common.ts";
+import { ContiguityResponse, ContiguityRawResponse } from "@/types/response";
+import { E164PhoneNumber, OptionalSenderNumber, MessageContent, AttachmentList, createFallbackSchema } from "@/types/common";
 
 export const iMessageSendRequest = z.object({
 	/** Recipient's iMessage address. Must be in E.164 format */

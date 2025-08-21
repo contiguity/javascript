@@ -1,13 +1,13 @@
-import { ContiguityClient } from "@/client/fetch.ts";
-import { _iMessageSend } from "@/services/imessage/send.ts";
-import { _iMessageTyping } from "@/services/imessage/typing.ts";
+import { ContiguityClient } from "@/client/fetch";
+import { _iMessageSend } from "@/services/imessage/send";
+import { _iMessageTyping } from "@/services/imessage/typing";
 import { z } from "zod";
 import { 
     iMessageSendRequest, 
     iMessageResponse
-} from "@/services/imessage/send.ts";
-import { iMessageTypingRequest, iMessageTypingResponse } from "@/services/imessage/typing.ts";
-import type { WithMetadata } from "@/types/metadata.ts";
+} from "@/services/imessage/send";
+import { iMessageTypingRequest, iMessageTypingResponse } from "@/services/imessage/typing";
+import type { WithMetadata } from "@/types/metadata";
 
 export type iMessageSendParams = z.infer<typeof iMessageSendRequest>;
 export type iMessageSendResponse = z.infer<typeof iMessageResponse>;

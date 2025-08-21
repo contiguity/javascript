@@ -1,11 +1,20 @@
 {
     "name": "contiguity",
     "version": "0.0.1",
-    "module": "src/index.ts",
     "type": "module",
     "description": "Contiguity's official JavaScript SDK",
     "author": "Contiguity",
     "license": "MIT",
+
+    "main": "./dist/index.js",
+    "module": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    
+    "files": [
+        "dist/**/*",
+        "README.md",
+        "LICENSE.md"
+    ],
     "keywords": [
         "contiguity",
         "sms",
@@ -26,7 +35,7 @@
     "scripts": {
         "publish": "bun publish --access public",
         "dev": "bun run src/index.ts",
-        "build": "bun build src/index.ts --outdir=dist --format=esm --target=node",
+        "build": "bunx tsc && bun build src/index.ts --outdir=dist --format=esm --target=node",
         "typecheck": "bunx tsc --noEmit",
         "update-deps": "npx npm-check-updates"
     },

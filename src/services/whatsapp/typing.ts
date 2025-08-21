@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { ContiguityResponse, ContiguityRawResponse } from "@/types/response.ts";
-import { E164PhoneNumber, OptionalSenderNumber, TypingAction } from "@/types/common.ts";
+import { ContiguityResponse, ContiguityRawResponse } from "@/types/response";
+import { E164PhoneNumber, OptionalSenderNumber, TypingAction } from "@/types/common";
 
 export const WhatsAppTypingRequest = z.object({
 	/** Recipient's WhatsApp number. Must be in E.164 format */

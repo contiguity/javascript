@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { ContiguityResponse, ContiguityRawResponse } from "@/types/response.ts";
-import { LeasedNumber } from "@/services/lease/leased.ts";
+import { ContiguityResponse, ContiguityRawResponse } from "@/types/response";
+import { LeasedNumber } from "@/services/lease/leased";
 
 export const LeaseDetailsRequest = z.object({
 	/** Phone number in E.164 format to get lease details for */

@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { ContiguityResponse, ContiguityRawResponse } from "@/types/response.ts";
-import { E164PhoneNumber, NumberStatus, Carrier } from "@/types/common.ts";
+import { ContiguityResponse, ContiguityRawResponse } from "@/types/response";
+import { E164PhoneNumber, NumberStatus, Carrier } from "@/types/common";
 import { 
     NumberCapabilities, 
     NumberHealth, 
@@ -8,7 +8,7 @@ import {
     NumberFormat, 
     NumberData, 
     NumberPricing 
-} from "@/services/lease/available.ts";
+} from "@/services/lease/available";
 
 export const LeaseGetRequest = z.object({
 	/** Phone number in E.164 format to get information about */

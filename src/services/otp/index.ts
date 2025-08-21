@@ -1,9 +1,9 @@
 import { z } from "zod";
-import { ContiguityClient } from "@/client/fetch.ts";
-import type { WithMetadata } from "@/types/metadata.ts";
-import { _otpNew, type OTPNewParams, OTPNewResponse } from "./new.ts";
-import { _otpVerify, type OTPVerifyParams, OTPVerifyResponse } from "./verify.ts";
-import { _otpResend, type OTPResendParams, OTPResendResponse } from "./resend.ts";
+import { ContiguityClient } from "@/client/fetch";
+import type { WithMetadata } from "@/types/metadata";
+import { _otpNew, type OTPNewParams, OTPNewResponse } from "./new";
+import { _otpVerify, type OTPVerifyParams, OTPVerifyResponse } from "./verify";
+import { _otpResend, type OTPResendParams, OTPResendResponse } from "./resend";
 
 export type OTPNewResponseType = z.infer<typeof OTPNewResponse>;
 export type OTPVerifyResponseType = z.infer<typeof OTPVerifyResponse>;

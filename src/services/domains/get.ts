@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { ContiguityResponse, ContiguityRawResponse } from "@/types/response.ts";
+import { ContiguityResponse, ContiguityRawResponse } from "@/types/response";
 
 // DNS Record schemas based on OpenAPI spec
 export const DNSRecord = z.object({

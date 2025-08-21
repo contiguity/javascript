@@ -1,10 +1,10 @@
 import { z } from "zod";
-import { ContiguityClient } from "@/client/fetch.ts";
-import type { WithMetadata } from "@/types/metadata.ts";
-import { _domainsList, DomainsListResponse } from "./list.ts";
-import { _domainsGet, type DomainsGetParams, DomainsGetResponse } from "./get.ts";
-import { _domainsRegister, type DomainsRegisterParams, DomainsRegisterResponse } from "./register.ts";
-import { _domainsDelete, type DomainsDeleteParams, DomainsDeleteResponse } from "./delete.ts";
+import { ContiguityClient } from "@/client/fetch";
+import type { WithMetadata } from "@/types/metadata";
+import { _domainsList, DomainsListResponse } from "./list";
+import { _domainsGet, type DomainsGetParams, DomainsGetResponse } from "./get";
+import { _domainsRegister, type DomainsRegisterParams, DomainsRegisterResponse } from "./register";
+import { _domainsDelete, type DomainsDeleteParams, DomainsDeleteResponse } from "./delete";
 
 export type DomainsListResponseType = z.infer<typeof DomainsListResponse>;
 export type DomainsGetResponseType = z.infer<typeof DomainsGetResponse>;

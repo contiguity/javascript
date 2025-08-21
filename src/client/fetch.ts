@@ -1,7 +1,7 @@
 // Contiguity API client with auth, base url, error handling, etc.
 import { z } from "zod";
-import { ContiguityResponse, ContiguityRawResponse } from "@/types/response.ts";
-import { ContiguityAPIError, ContiguityError } from "@/types/error.ts";
+import { ContiguityResponse, ContiguityRawResponse } from "@/types/response";
+import { ContiguityAPIError, ContiguityError } from "@/types/error";
 
 // year | month | version (monthly) 
 const LATEST_API_VERSION = "v2025.8.20";

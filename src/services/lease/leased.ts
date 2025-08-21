@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { ContiguityResponse, ContiguityRawResponse } from "@/types/response.ts";
+import { ContiguityResponse, ContiguityRawResponse } from "@/types/response";
 import { 
     NumberCapabilities, 
     NumberHealth, 
@@ -7,7 +7,7 @@ import {
     NumberFormat, 
     NumberData, 
     NumberPricing 
-} from "@/services/lease/available.ts";
+} from "@/services/lease/available";
 
 export const LeasedBillingPeriod = z.object({
 	/** Lease start timestamp */

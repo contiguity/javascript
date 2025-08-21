@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { ContiguityResponse, ContiguityRawResponse } from "@/types/response.ts";
-import { DNSRecords } from "./get.ts";
+import { ContiguityResponse, ContiguityRawResponse } from "@/types/response";
+import { DNSRecords } from "./get";
 
 export const DomainsRegisterRequest = z.object({
 	/** Domain name to register */

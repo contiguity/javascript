@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { ContiguityResponse, ContiguityRawResponse } from "@/types/response.ts";
-import { E164PhoneNumber } from "@/types/common.ts";
+import { ContiguityResponse, ContiguityRawResponse } from "@/types/response";
+import { E164PhoneNumber } from "@/types/common";
 
 export const OTPNewRequest = z.object({
 	/** Recipient's phone number. Must be in E.164 format */

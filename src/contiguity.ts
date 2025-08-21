@@ -1,11 +1,11 @@
-import { TextService } from "@/services/text/index.ts";
-import { EmailService } from "@/services/email/index.ts";
-import { iMessageService } from "@/services/imessage/index.ts";
-import { WhatsAppService } from "@/services/whatsapp/index.ts";
-import { LeaseService } from "@/services/lease/index.ts";
-import { OTPService } from "@/services/otp/index.ts";
-import { DomainsService } from "@/services/domains/index.ts";
-import { ContiguitySDKError } from "@/types/error.ts";
+import { TextService } from "@/services/text/index";
+import { EmailService } from "@/services/email/index";
+import { iMessageService } from "@/services/imessage/index";
+import { WhatsAppService } from "@/services/whatsapp/index";
+import { LeaseService } from "@/services/lease/index";
+import { OTPService } from "@/services/otp/index";
+import { DomainsService } from "@/services/domains/index";
+import { ContiguitySDKError } from "@/types/error";
 
 /**
  * Main Contiguity API client class

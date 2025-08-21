@@ -1,34 +1,34 @@
-import { ContiguityClient } from "@/client/fetch.ts";
-import { _leaseAvailable } from "@/services/lease/available.ts";
-import { _leaseGet } from "@/services/lease/get.ts";
-import { _leaseCreate } from "@/services/lease/create.ts";
-import { _leasedNumbers } from "@/services/lease/leased.ts";
-import { _leaseDetails } from "@/services/lease/details.ts";
-import { _leaseTerminate } from "@/services/lease/terminate.ts";
+import { ContiguityClient } from "@/client/fetch";
+import { _leaseAvailable } from "@/services/lease/available";
+import { _leaseGet } from "@/services/lease/get";
+import { _leaseCreate } from "@/services/lease/create";
+import { _leasedNumbers } from "@/services/lease/leased";
+import { _leaseDetails } from "@/services/lease/details";
+import { _leaseTerminate } from "@/services/lease/terminate";
 import { z } from "zod";
 import { 
     LeaseAvailableResponse
-} from "@/services/lease/available.ts";
+} from "@/services/lease/available";
 import {
     LeaseGetRequest,
     LeaseGetResponse
-} from "@/services/lease/get.ts";
+} from "@/services/lease/get";
 import {
     LeaseCreateRequest,
     LeaseCreateResponse
-} from "@/services/lease/create.ts";
+} from "@/services/lease/create";
 import {
     LeaseLeasedResponse
-} from "@/services/lease/leased.ts";
+} from "@/services/lease/leased";
 import {
     LeaseDetailsRequest,
     LeaseDetailsResponse
-} from "@/services/lease/details.ts";
+} from "@/services/lease/details";
 import {
     LeaseTerminateRequest,
     LeaseTerminateResponse
-} from "@/services/lease/terminate.ts";
-import type { WithMetadata } from "@/types/metadata.ts";
+} from "@/services/lease/terminate";
+import type { WithMetadata } from "@/types/metadata";
 
 export type LeaseAvailableResponseType = z.infer<typeof LeaseAvailableResponse>;
 export type LeaseGetParams = z.infer<typeof LeaseGetRequest>;
