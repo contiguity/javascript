@@ -11,21 +11,32 @@ export const ContiguityAPIError = z.object({
     }),
 });
 
+export interface ContiguityErrorData {
+    data: {
+        status: number;
+        error: string;
+    };
+}
+
 export class ContiguityError extends Error {
-    constructor(response) {
+    public readonly status: number;
+
+    constructor(response: ContiguityErrorData) {
         super(response.data.error);
         this.message = response.data.error;
         this.status = response.data.status;
     }
 
-    static fromError(error) {
+    static fromError(error: any) {
         return new ContiguityError({
-            message: error.message || "Unknown error",
-            status: error.status || "unknown_error",
+            data: {
+                error: error.message || "Unknown error",
+                status: error.status || 500,
+            }
         });
     }
 
-    toString() {
+    override toString() {
         return `[Contiguity Error]: ${this.message} (status: ${this.status})`;
     }
 
@@ -38,7 +49,9 @@ export class ContiguityError extends Error {
 }
 
 export class ContiguitySDKError extends Error {
-    constructor(message, status = 'sdk_error') {
+    public readonly status: string;
+
+    constructor(message: string, status: string = 'sdk_error') {
         super(message);
         this.message = message;
         this.status = status;
@@ -50,7 +63,7 @@ export class ContiguitySDKError extends Error {
         }
     }
 
-    toString() {
+    override toString() {
         return `[Contiguity SDK Error]: ${this.message} (status: ${this.status})`;
     }
 

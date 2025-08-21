@@ -1,5 +1,5 @@
-import { z } from "zod"
-import { ContiguityResponse, ContiguityRawResponse } from "@/types/response.js"
+import { z } from "zod";
+import { ContiguityResponse, ContiguityRawResponse } from "@/types/response.ts";
 
 export const EmailSendRequest = z.object({
 	/** Recipient email address(es). Can be a string or array of up to 10 addresses */
@@ -50,45 +50,25 @@ export const EmailSendResponseRaw = ContiguityRawResponse.extend({
 	data: EmailResponse,
 })
 
-/**
- * @typedef {Object} EmailBodyParams
- * @property {string} [text] - Text content of the email
- * @property {string} [html] - HTML content of the email
- */
+export type EmailBodyParams = {
+	text?: string;
+	html?: string;
+};
 
-/**
- * @typedef {Object} EmailHeaderParams
- * @property {string} name - Header name
- * @property {string} value - Header value
- */
+export type EmailHeaderParams = {
+	name: string;
+	value: string;
+};
 
-/**
- * @typedef {Object} EmailSendParams
- * @property {string|string[]} to - Recipient email address(es). Can be a string or array of up to 10 addresses
- * @property {string} from - Provide either just your sender name (and use Contiguity's email) or provide your sender name and email (has to be verified in the Console)
- * @property {string} subject - Subject of the email
- * @property {EmailBodyParams} body - Email body content (must include either text or html)
- * @property {string} [reply_to] - Reply-to email address
- * @property {string|string[]} [cc] - Carbon copy email address(es). Can be a string or array of up to 10 addresses
- * @property {string|string[]} [bcc] - Blind carbon copy email address(es). Can be a string or array of up to 10 addresses
- * @property {EmailHeaderParams[]} [headers] - Custom email headers
- */
-
-/**
- * @typedef {Object} EmailResponse
- * @property {string} email_id - The email's ID. Use it to refer to this email in the future
- */
+export type EmailSendParams = z.infer<typeof EmailSendRequest>;
+export type EmailSendResponseType = z.infer<typeof EmailResponse>;
 
 /**
  * Sends an email
  *
- * @param {EmailSendParams} params - Email parameters
- * @returns {Promise<Object>} Response containing email_id and other details
- * @throws {ContiguityError} When the API request fails or validation errors occur
- *
  * @example
- * ```javascript
- * const response = await contiguity.send.email({
+ * ```typescript
+ * const response = await contiguity.email.send({
  *   to: "recipient@example.com",
  *   from: "Contiguity <no-reply@contiguity.com>",
  *   subject: "Hello from Contiguity!",
@@ -101,9 +81,9 @@ export const EmailSendResponseRaw = ContiguityRawResponse.extend({
  * ```
  *
  * @example
- * ```javascript
+ * ```typescript
  * // Send to multiple recipients with CC and BCC
- * const response = await contiguity.send.email({
+ * const response = await contiguity.email.send({
  *   to: ["user1@example.com", "user2@example.com"],
  *   from: "Your Company <no-reply@yourcompany.com>",
  *   subject: "Newsletter Update",
@@ -121,12 +101,12 @@ export const EmailSendResponseRaw = ContiguityRawResponse.extend({
  * console.log(`Email ID: ${response.email_id}`);
  * ```
  */
-export async function _email(params) {
-	const validatedParams = EmailSendRequest.parse(params)
+export async function _emailSend(this: any, params: EmailSendParams): Promise<any> {
+	const validatedParams = EmailSendRequest.parse(params);
 	const response = await this.request("/email", {
 		method: "POST",
 		body: JSON.stringify(validatedParams),
-	})
+	});
 
 	return this.parse({
 		response,
@@ -134,5 +114,5 @@ export async function _email(params) {
 			sdk: EmailResponse,
 			raw: EmailSendResponseRaw
 		}
-	})
+	});
 }

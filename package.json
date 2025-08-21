@@ -1,7 +1,7 @@
 {
     "name": "@contiguity/javascript",
     "version": "3.0.0",
-    "module": "src/index.js",
+    "module": "src/index.ts",
     "type": "module",
     "description": "Contiguity's official JavaScript SDK",
     "author": "Contiguity",
@@ -12,7 +12,9 @@
     },
     "scripts": {
         "publish": "bun publish --access public",
-        "dev": "bun run src/index.ts"
+        "dev": "bun run src/index.ts",
+        "build": "bun build src/index.ts --outdir=dist --format=esm --target=node",
+        "typecheck": "bunx tsc --noEmit"
     },
     "git": {
         "url": "https://github.com/contiguity/javascript.git"

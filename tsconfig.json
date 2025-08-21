@@ -8,10 +8,10 @@
         "module": "Preserve",
         "moduleDetection": "force",
         "jsx": "react-jsx",
-        "noEmit": true,
-        "allowJs": true,
+        "allowJs": false,
         // Bundler mode
         "moduleResolution": "bundler",
+        "noEmit": true,
         "allowImportingTsExtensions": true,
         "verbatimModuleSyntax": true,
 

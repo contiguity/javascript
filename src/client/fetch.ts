@@ -1,16 +1,25 @@
 // Contiguity API client with auth, base url, error handling, etc.
-import { ContiguityResponse, ContiguityRawResponse } from "@/types/response.js";
-import { ContiguityAPIError, ContiguityError } from "@/types/error.js";
+import { z } from "zod";
+import { ContiguityResponse, ContiguityRawResponse } from "@/types/response.ts";
+import { ContiguityAPIError, ContiguityError } from "@/types/error.ts";
 
 // year | month | version (monthly) 
 const LATEST_API_VERSION = "v2025.8.20";
 const BASE_URL = "http://localhost:8080";
 
+export interface ContiguityClientOptions {
+    raw?: boolean;
+    debug?: boolean;
+}
+
 /**
  * Contiguity API client with request functionality
  */
 export class ContiguityClient {
-    constructor(token, options = {}) {
+    protected readonly token: string;
+    protected readonly raw: boolean;
+
+    constructor(token: string, options: ContiguityClientOptions = {}) {
         if (!token || typeof token !== 'string') {
             throw new Error('API token is required and must be a string');
         }
@@ -25,11 +34,8 @@ export class ContiguityClient {
 
     /**
      * Make an authenticated request to the Contiguity API
-     * @param {string} endpoint - API endpoint 
-     * @param {RequestInit} options - Fetch options
-     * @returns {Promise<any>} Parsed and validated response data
      */
-    async request(endpoint, options = {}) {
+    async request(endpoint: string, options: RequestInit = {}): Promise<any> {
         const url = `${BASE_URL}${endpoint}`;
         
         const defaultHeaders = {
@@ -61,7 +67,7 @@ export class ContiguityClient {
                     throw new ContiguityError({
                         data: {
                             status: response.status,
-                            error: data.error || `HTTP ${response.status}: ${response.statusText}`,
+                            error: (data as any)?.error || `HTTP ${response.status}: ${response.statusText}`,
                         }
                     });
                 }
@@ -72,12 +78,12 @@ export class ContiguityClient {
         if (result.success) {
             return result.data;
         } else {
-            throw new ContiguityError({
-                data: {
-                    status: "validation_error",
-                    error: "Invalid response format from API",
-                }
-            });
+                                throw new ContiguityError({
+                        data: {
+                            status: 500,
+                            error: "Invalid response format from API",
+                        }
+                    });
         }
         } catch (error) {
             if (error instanceof ContiguityError) {
@@ -93,15 +99,14 @@ export class ContiguityClient {
      * Parse and normalize API responses to either raw or flattened format
      * This method handles the complex logic of parsing different response formats
      * from the Contiguity API and normalizing them consistently.
-     * 
-     * @param {Object} params - Parse parameters
-     * @param {Object} params.response - Raw response from API
-     * @param {Object} params.schemas - Zod schemas for validation
-     * @param {Object} params.schemas.sdk - Zod schema for the expected data format (e.g., TextResponse)
-     * @param {Object} params.schemas.raw - Zod schema for the raw response format (e.g., TextSendResponseRaw)
-     * @returns {Object} Normalized response
      */
-    parse({ response, schemas: { sdk, raw } }) {
+    parse<T extends z.ZodTypeAny, R extends z.ZodTypeAny>({
+        response,
+        schemas: { sdk, raw }
+    }: {
+        response: any;
+        schemas: { sdk: T; raw: R; };
+    }): any {
         // Handle different response formats:
         // 1. Already wrapped in response format (response.object === "response")
         // 2. Direct data that needs wrapping
@@ -119,16 +124,20 @@ export class ContiguityClient {
                 }
                 : raw.parse(response)
 
-        return this.raw
-            ? validatedResponse
-            : {
-                    ...validatedResponse.data,
-                    metadata: {
-                        id: validatedResponse.id,
-                        timestamp: validatedResponse.timestamp,
-                        api_version: validatedResponse.api_version,
-                        object: validatedResponse.object,
-                    },
-            }
+        if (this.raw) {
+            return validatedResponse;
+        }
+
+        // For flattened responses, we need to handle both formats
+        const rawData = raw.parse(validatedResponse) as any;
+        return {
+            ...rawData.data,
+            metadata: {
+                id: rawData.id,
+                timestamp: rawData.timestamp,
+                api_version: rawData.api_version,
+                object: rawData.object,
+            },
+        };
     }
 }
