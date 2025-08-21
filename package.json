@@ -2,7 +2,7 @@
     "name": "contiguity",
     "version": "0.0.1",
     "type": "module",
-    "description": "Contiguity's official JavaScript SDK",
+    "description": "Contiguity's official TypeScript SDK",
     "author": "Contiguity",
     "license": "MIT",
 
