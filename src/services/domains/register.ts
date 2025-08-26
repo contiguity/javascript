@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { createResponse } from "@/types/base";
 import { DNSRecords } from "./get";
 
 export const DomainsRegisterRequest = z.object({
@@ -23,7 +22,7 @@ export const DomainsRegisterResponse = z.object({
 });
 
 // Using the new base response builder
-export const DomainsRegisterResponseBuilder = createResponse(DomainsRegisterResponse);
+
 
 export type DomainsRegisterParams = z.infer<typeof DomainsRegisterRequest>;
 export type DomainsRegisterResponse = z.infer<typeof DomainsRegisterResponse>;
@@ -74,9 +73,6 @@ export async function _domainsRegister(this: any, params: DomainsRegisterParams)
 
 	return this.parse({
 		response,
-		schemas: {
-			sdk: DomainsRegisterResponse,
-			raw: DomainsRegisterResponseBuilder.raw
-		}
+		schema: DomainsRegisterResponse
 	});
 }

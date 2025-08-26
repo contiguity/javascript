@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { createResponse } from "@/types/base";
 import { LeasedNumber } from "@/services/lease/leased";
 
 export const LeaseDetailsRequest = z.object({
@@ -10,7 +9,7 @@ export const LeaseDetailsRequest = z.object({
 export const LeaseDetailsResponse = LeasedNumber;
 
 // Using the new base response builder
-export const LeaseDetailsResponseBuilder = createResponse(LeaseDetailsResponse);
+
 
 export type LeaseDetailsParams = z.infer<typeof LeaseDetailsRequest>;
 export type LeaseDetailsResponseType = z.infer<typeof LeaseDetailsResponse>;
@@ -71,9 +70,6 @@ export async function _leaseDetails(this: any, params: LeaseDetailsParams): Prom
 
 	return this.parse({
 		response,
-		schemas: {
-			sdk: LeaseDetailsResponse,
-			raw: LeaseDetailsResponseBuilder.raw
-		}
+		schema: LeaseDetailsResponse
 	});
 }

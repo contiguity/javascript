@@ -1,9 +1,9 @@
 import { z } from "zod";
-import { ContiguityResponse, ContiguityRawResponse } from "@/types/response";
+import { ContiguityResponse } from "@/types/response";
 
 /**
- * Base response builder that automatically creates flattened and raw response types
- * This eliminates the need to manually define *ResponseFlattened and *ResponseRaw for each service
+ * Base response builder that automatically creates typed responses with metadata
+ * This creates flattened responses where the data is combined with metadata
  */
 export class BaseResponseBuilder<T extends z.ZodObject<any>> {
     constructor(public readonly schema: T) {}
@@ -15,20 +15,6 @@ export class BaseResponseBuilder<T extends z.ZodObject<any>> {
     get flattened() {
         return ContiguityResponse.extend(this.schema.shape);
     }
-
-    get raw() {
-        return ContiguityRawResponse.extend({
-            data: this.schema,
-        });
-    }
-
-    get all() {
-        return {
-            response: this.response,
-            flattened: this.flattened,
-            raw: this.raw,
-        };
-    }
 }
 
 export function createResponse<T extends z.ZodObject<any>>(schema: T) {
@@ -37,4 +23,3 @@ export function createResponse<T extends z.ZodObject<any>>(schema: T) {
 
 export type BaseResponse<T extends BaseResponseBuilder<any>> = z.infer<T['response']>;
 export type FlattenedResponse<T extends BaseResponseBuilder<any>> = z.infer<T['flattened']>;
-export type RawResponse<T extends BaseResponseBuilder<any>> = z.infer<T['raw']>;

@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { createResponse } from "@/types/base";
 
 export const OTPVerifyRequest = z.object({
 	/** The OTP ID you received when sending the OTP */
@@ -13,8 +12,7 @@ export const OTPVerifyResponse = z.object({
 	verified: z.boolean(),
 })
 
-// Using the new base response builder
-export const OTPVerifyResponseBuilder = createResponse(OTPVerifyResponse)
+
 
 export type OTPVerifyParams = z.infer<typeof OTPVerifyRequest>;
 export type OTPVerifyResponse = z.infer<typeof OTPVerifyResponse>;
@@ -40,9 +38,6 @@ export async function _otpVerify(this: any, params: OTPVerifyParams): Promise<an
 
 	return this.parse({
 		response,
-		schemas: {
-			sdk: OTPVerifyResponse,
-			raw: OTPVerifyResponseBuilder.raw
-		}
+		schema: OTPVerifyResponse
 	});
 }

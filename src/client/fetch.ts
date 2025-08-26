@@ -1,6 +1,5 @@
 // Contiguity API client with auth, base url, error handling, etc.
 import { z } from "zod";
-import { ContiguityResponse, ContiguityRawResponse } from "@/types/response";
 import { ContiguityAPIError, ContiguityError } from "@/types/error";
 
 // year | month | version (monthly) 
@@ -8,7 +7,6 @@ const LATEST_API_VERSION = "v2025.8.20";
 const BASE_URL = "https://api.contiguity.com" // "http://localhost:8080";
 
 export interface ContiguityClientOptions {
-    raw?: boolean;
     debug?: boolean;
 }
 
@@ -17,7 +15,6 @@ export interface ContiguityClientOptions {
  */
 export class ContiguityClient {
     protected readonly token: string;
-    protected readonly raw: boolean;
 
     constructor(token: string, options: ContiguityClientOptions = {}) {
         if (!token || typeof token !== 'string') {
@@ -29,7 +26,6 @@ export class ContiguityClient {
         }
 
         this.token = token.trim();
-        this.raw = options.raw || false; // If true, return raw API responses
     }
 
     /**
@@ -73,18 +69,7 @@ export class ContiguityClient {
                 }
             }
 
-                    // Validate successful response with Zod using raw response schema
-        const result = ContiguityRawResponse.safeParse(data);
-        if (result.success) {
-            return result.data;
-        } else {
-                                throw new ContiguityError({
-                        data: {
-                            status: 500,
-                            error: "Invalid response format from API",
-                        }
-                    });
-        }
+            return data;
         } catch (error) {
             if (error instanceof ContiguityError) {
                 throw error;
@@ -96,47 +81,28 @@ export class ContiguityClient {
     }
 
     /**
-     * Parse and normalize API responses to either raw or flattened format
-     * This method handles the complex logic of parsing different response formats
-     * from the Contiguity API and normalizing them consistently.
+     * Parse and normalize API responses to flattened format with metadata
+     * This method handles different response formats from the Contiguity API
+     * and normalizes them to a consistent flattened format.
      */
-    parse<T extends z.ZodType, R extends z.ZodType>({
+    parse<T extends z.ZodType>({
         response,
-        schemas: { sdk, raw }
+        schema
     }: {
         response: any;
-        schemas: { sdk: T; raw: R; };
+        schema: T;
     }): any {
-        // Handle different response formats:
-        // 1. Already wrapped in response format (response.object === "response")
-        // 2. Direct data that needs wrapping
-        // 3. Fallback to raw parsing
-        const validatedResponse =
-            response.object === "response"
-                ? raw.parse(response)
-                : sdk.safeParse(response).success
-                ? {
-                        id: response.id || "unknown",
-                        timestamp: response.timestamp || Date.now(),
-                        api_version: response.api_version || "unknown",
-                        object: response.object || "unknown",
-                        data: sdk.parse(response),
-                }
-                : raw.parse(response)
-
-        if (this.raw) {
-            return validatedResponse;
-        }
-
-        // For flattened responses, we need to handle both formats
-        const rawData = raw.parse(validatedResponse) as any;
+        // Parse the response data
+        const responseData = schema.parse(response);
+        
+        // Return flattened response with metadata
         return {
-            ...rawData.data,
+            ...(typeof responseData === 'object' && responseData !== null ? responseData : {}),
             metadata: {
-                id: rawData.id,
-                timestamp: rawData.timestamp,
-                api_version: rawData.api_version,
-                object: rawData.object,
+                id: response.id || "unknown",
+                timestamp: response.timestamp || Date.now(),
+                api_version: response.api_version || "unknown",
+                object: response.object || "unknown",
             },
         };
     }

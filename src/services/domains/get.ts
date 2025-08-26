@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { createResponse } from "@/types/base";
 
 // DNS Record schemas based on OpenAPI spec
 export const DNSRecord = z.object({
@@ -53,8 +52,8 @@ export const DomainsGetResponse = z.object({
 	verifications: DomainVerifications,
 });
 
-// Using the new base response builder - this replaces the manual Flattened/Raw definitions
-export const DomainsGetResponseBuilder = createResponse(DomainsGetResponse);
+
+
 
 export type DomainsGetParams = z.infer<typeof DomainsGetRequest>;
 export type DomainsGetResponse = z.infer<typeof DomainsGetResponse>;
@@ -100,9 +99,6 @@ export async function _domainsGet(this: any, params: DomainsGetParams): Promise<
 
 	return this.parse({
 		response,
-		schemas: {
-			sdk: DomainsGetResponse,
-			raw: DomainsGetResponseBuilder.raw
-		}
+		schema: DomainsGetResponse
 	});
 }

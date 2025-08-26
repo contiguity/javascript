@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { createResponse } from "@/types/base";
 import { E164PhoneNumber, NumberStatus, Carrier } from "@/types/common";
 import { 
     NumberCapabilities, 
@@ -39,7 +38,7 @@ export const LeaseGetResponse = z.object({
 });
 
 // Using the new base response builder
-export const LeaseGetResponseBuilder = createResponse(LeaseGetResponse);
+
 
 export type LeaseGetParams = z.infer<typeof LeaseGetRequest>;
 export type LeaseGetResponseType = z.infer<typeof LeaseGetResponse>;
@@ -81,9 +80,6 @@ export async function _leaseGet(this: any, params: LeaseGetParams): Promise<any>
 
 	return this.parse({
 		response,
-		schemas: {
-			sdk: LeaseGetResponse,
-			raw: LeaseGetResponseBuilder.raw
-		}
+		schema: LeaseGetResponse
 	});
 }

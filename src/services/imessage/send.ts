@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { createResponse } from "@/types/base";
 import { E164PhoneNumber, OptionalSenderNumber, MessageContent, AttachmentList, createFallbackSchema } from "@/types/common";
 
 export const iMessageSendRequest = z.object({
@@ -20,8 +19,8 @@ export const iMessageResponse = z.object({
 	message_id: z.string(),
 })
 
-// Using the new base response builder - this replaces the manual Flattened/Raw definitions
-export const iMessageSendResponse = createResponse(iMessageResponse)
+
+
 
 export type iMessageFallbackParams = {
 	when: ("imessage_unsupported" | "imessage_fails")[];
@@ -71,9 +70,6 @@ export async function _iMessageSend(this: any, params: iMessageSendParams): Prom
 
 	return this.parse({
 		response,
-		schemas: {
-			sdk: iMessageResponse,
-			raw: iMessageSendResponse.raw
-		}
+		schema: iMessageResponse
 	});
 }

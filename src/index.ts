@@ -2,10 +2,10 @@ import { Contiguity } from "@/contiguity";
 
 export { Contiguity };
 
-export { ContiguityResponse, ContiguityRawResponse } from "@/types/response";
+export { ContiguityResponse } from "@/types/response";
 export { ContiguityAPIError, ContiguityError, ContiguitySDKError } from "@/types/error";
 export type { ContiguityMetadata, WithMetadata } from "@/types/metadata";
-export { createResponse, BaseResponseBuilder, type BaseResponse, type FlattenedResponse, type RawResponse } from "@/types/base";
+export { createResponse, BaseResponseBuilder, type BaseResponse, type FlattenedResponse } from "@/types/base";
 export {
     E164PhoneNumber,
     MessageContent,
@@ -81,9 +81,12 @@ export {
     LeaseTerminateResponse
 } from "@/services/lease/terminate";
 export {
-    OTPNewRequest,
-    OTPNewResponse
-} from "@/services/otp/new";
+    OTPSendRequest,
+    OTPSendResponse,
+    // Deprecated aliases, backwards compatibility
+    OTPSendRequest as OTPNewRequest,
+    OTPSendResponse as OTPNewResponse
+} from "@/services/otp/send";
 export {
     OTPVerifyRequest,
     OTPVerifyResponse

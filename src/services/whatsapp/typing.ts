@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { createResponse } from "@/types/base";
 import { E164PhoneNumber, OptionalSenderNumber, TypingAction } from "@/types/common";
 
 export const WhatsAppTypingRequest = z.object({
@@ -17,7 +16,7 @@ export const WhatsAppTypingResponse = z.object({
 })
 
 // Using the new base response builder
-export const WhatsAppTypingResponseBuilder = createResponse(WhatsAppTypingResponse)
+
 
 export type WhatsAppTypingParams = z.infer<typeof WhatsAppTypingRequest>;
 export type WhatsAppTypingResponseType = z.infer<typeof WhatsAppTypingResponse>;
@@ -55,9 +54,6 @@ export async function _whatsAppTyping(this: any, params: WhatsAppTypingParams): 
 
 	return this.parse({
 		response,
-		schemas: {
-			sdk: WhatsAppTypingResponse,
-			raw: WhatsAppTypingResponseBuilder.raw
-		}
+		schema: WhatsAppTypingResponse
 	});
 }

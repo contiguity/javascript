@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { createResponse } from "@/types/base";
 import { E164PhoneNumber, OptionalSenderNumber, TypingAction } from "@/types/common";
 
 export const iMessageTypingRequest = z.object({
@@ -17,7 +16,7 @@ export const iMessageTypingResponse = z.object({
 })
 
 // Using the new base response builder
-export const iMessageTypingResponseBuilder = createResponse(iMessageTypingResponse)
+
 
 export type iMessageTypingParams = z.infer<typeof iMessageTypingRequest>;
 export type iMessageTypingResponseType = z.infer<typeof iMessageTypingResponse>;
@@ -55,9 +54,6 @@ export async function _iMessageTyping(this: any, params: iMessageTypingParams): 
 
 	return this.parse({
 		response,
-		schemas: {
-			sdk: iMessageTypingResponse,
-			raw: iMessageTypingResponseBuilder.raw
-		}
+		schema: iMessageTypingResponse
 	});
 }

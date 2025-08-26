@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { createResponse } from "@/types/base";
 import { 
     NumberCapabilities, 
     NumberHealth, 
@@ -60,7 +59,7 @@ export const LeaseLeasedResponse = z.object({
 });
 
 // Using the new base response builder
-export const LeaseLeasedResponseBuilder = createResponse(LeaseLeasedResponse);
+
 
 export type LeaseLeasedResponseType = z.infer<typeof LeaseLeasedResponse>;
 export type LeasedNumberType = z.infer<typeof LeasedNumber>;
@@ -123,9 +122,6 @@ export async function _leasedNumbers(this: any): Promise<any> {
 
 	return this.parse({
 		response,
-		schemas: {
-			sdk: LeaseLeasedResponse,
-			raw: LeaseLeasedResponseBuilder.raw
-		}
+		schema: LeaseLeasedResponse
 	});
 }

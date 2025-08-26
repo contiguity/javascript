@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { createResponse } from "@/types/base";
 import { SingleOrMultipleEmails } from "@/types/common";
 
 export const EmailSendRequest = z.object({
@@ -38,8 +37,7 @@ export const EmailResponse = z.object({
 	email_id: z.string(),
 })
 
-// Using the new base response builder
-export const EmailSendResponse = createResponse(EmailResponse)
+
 
 export type EmailBodyParams = {
 	text?: string;
@@ -95,11 +93,8 @@ export async function _emailSend(this: any, params: EmailSendParams): Promise<an
 		body: JSON.stringify(validatedParams),
 	});
 
-	return this.parse({
-		response,
-		schemas: {
-			sdk: EmailResponse,
-			raw: EmailSendResponse.raw
-		}
-	});
+			return this.parse({
+			response,
+			schema: EmailResponse
+		});
 }

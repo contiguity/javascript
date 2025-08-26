@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { ContiguityResponse, ContiguityRawResponse } from "@/types/response";
 
 // Domain object schema based on OpenAPI spec
 export const DomainInfo = z.object({
@@ -22,13 +21,7 @@ export const DomainsListResponse = z.object({
 	domains: z.array(DomainInfo),
 });
 
-export const DomainsListResponseFlattened = ContiguityResponse.extend({
-	domains: z.array(DomainInfo),
-});
 
-export const DomainsListResponseRaw = ContiguityRawResponse.extend({
-	data: DomainsListResponse,
-});
 
 export type DomainsListResponse = z.infer<typeof DomainsListResponse>;
 export type DomainInfo = z.infer<typeof DomainInfo>;
@@ -53,9 +46,6 @@ export async function _domainsList(this: any): Promise<any> {
 
 	return this.parse({
 		response,
-		schemas: {
-			sdk: DomainsListResponse,
-			raw: DomainsListResponseRaw
-		}
+		schema: DomainsListResponse
 	});
 }

@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { createResponse } from "@/types/base";
 import { E164PhoneNumber, OptionalSenderNumber, MessageContent, AttachmentList, createFallbackSchema } from "@/types/common";
 
 export const WhatsAppSendRequest = z.object({
@@ -19,9 +18,6 @@ export const WhatsAppResponse = z.object({
 	/** The message's ID. Use it to refer to this message in the future, when checking the status of the message or finding it in the Console */
 	message_id: z.string(),
 })
-
-// Using the new base response builder - this replaces the manual Flattened/Raw definitions
-export const WhatsAppSendResponse = createResponse(WhatsAppResponse)
 
 export type WhatsAppFallbackParams = {
 	when: ("whatsapp_unsupported" | "whatsapp_fails")[];
@@ -71,9 +67,6 @@ export async function _whatsAppSend(this: any, params: WhatsAppSendParams): Prom
 
 	return this.parse({
 		response,
-		schemas: {
-			sdk: WhatsAppResponse,
-			raw: WhatsAppSendResponse.raw
-		}
+		schema: WhatsAppResponse
 	});
 }

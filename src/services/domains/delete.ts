@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { createResponse } from "@/types/base";
 
 export const DomainsDeleteRequest = z.object({
 	/** Domain name to delete */
@@ -14,7 +13,7 @@ export const DomainsDeleteResponse = z.object({
 });
 
 // Using the new base response builder
-export const DomainsDeleteResponseBuilder = createResponse(DomainsDeleteResponse);
+
 
 export type DomainsDeleteParams = z.infer<typeof DomainsDeleteRequest>;
 export type DomainsDeleteResponse = z.infer<typeof DomainsDeleteResponse>;
@@ -43,9 +42,6 @@ export async function _domainsDelete(this: any, params: DomainsDeleteParams): Pr
 
 	return this.parse({
 		response,
-		schemas: {
-			sdk: DomainsDeleteResponse,
-			raw: DomainsDeleteResponseBuilder.raw
-		}
+		schema: DomainsDeleteResponse
 	});
 }

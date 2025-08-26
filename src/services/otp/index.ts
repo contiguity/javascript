@@ -1,11 +1,11 @@
 import { z } from "zod";
 import { ContiguityClient } from "@/client/fetch";
 import type { WithMetadata } from "@/types/metadata";
-import { _otpNew, type OTPNewParams, OTPNewResponse } from "./new";
+import { _otpSend, type OTPSendParams, OTPSendResponse } from "./send";
 import { _otpVerify, type OTPVerifyParams, OTPVerifyResponse } from "./verify";
 import { _otpResend, type OTPResendParams, OTPResendResponse } from "./resend";
 
-export type OTPNewResponseType = z.infer<typeof OTPNewResponse>;
+export type OTPSendResponseType = z.infer<typeof OTPSendResponse>;
 export type OTPVerifyResponseType = z.infer<typeof OTPVerifyResponse>;
 export type OTPResendResponseType = z.infer<typeof OTPResendResponse>;
 
@@ -19,9 +19,17 @@ export class OTPService extends ContiguityClient {
 
     /**
      * Send a new OTP to the specified phone number
+     * @deprecated Use `send()` instead. This method will be removed in a future version.
      */
-    async new(params: OTPNewParams): Promise<WithMetadata<OTPNewResponseType>> {
-        return _otpNew.call(this, params);
+    async new(params: OTPSendParams): Promise<WithMetadata<OTPSendResponseType>> {
+        return this.send(params);
+    }
+
+    /**
+     * Send a new OTP to the specified phone number
+     */
+    async send(params: OTPSendParams): Promise<WithMetadata<OTPSendResponseType>> {
+        return _otpSend.call(this, params);
     }
 
     /**

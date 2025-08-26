@@ -1,8 +1,7 @@
 import { z } from "zod";
-import { createResponse } from "@/types/base";
 import { E164PhoneNumber } from "@/types/common";
 
-export const OTPNewRequest = z.object({
+export const OTPSendRequest = z.object({
 	/** Recipient's phone number. Must be in E.164 format */
 	to: E164PhoneNumber,
 	/** Language of the OTP message */
@@ -11,23 +10,20 @@ export const OTPNewRequest = z.object({
 	name: z.string().min(1, "App name cannot be empty"),
 })
 
-export const OTPNewResponse = z.object({
+export const OTPSendResponse = z.object({
 	/** The OTP's ID. Use it to refer to this verification in the future, such as when verifying the OTP or resending it. */
 	otp_id: z.string(),
 })
 
-// Using the new base response builder - this replaces the manual Flattened/Raw definitions
-export const OTPNewResponseBuilder = createResponse(OTPNewResponse)
-
-export type OTPNewParams = z.infer<typeof OTPNewRequest>;
-export type OTPNewResponse = z.infer<typeof OTPNewResponse>;
+export type OTPSendParams = z.infer<typeof OTPSendRequest>;
+export type OTPSendResponse = z.infer<typeof OTPSendResponse>;
 
 /**
  * Sends a new OTP to the specified phone number
  *
  * @example
  * ```typescript
- * const response = await contiguity.otp.new({
+ * const response = await contiguity.otp.send({
  *   to: "+1234567890",
  *   language: "en",
  *   name: "My App"
@@ -35,8 +31,8 @@ export type OTPNewResponse = z.infer<typeof OTPNewResponse>;
  * console.log(`OTP ID: ${response.otp_id}`);
  * ```
  */
-export async function _otpNew(this: any, params: OTPNewParams): Promise<any> {
-	const validatedParams = OTPNewRequest.parse(params);
+export async function _otpSend(this: any, params: OTPSendParams): Promise<any> {
+	const validatedParams = OTPSendRequest.parse(params);
 	const response = await this.request("/otp/new", {
 		method: "POST",
 		body: JSON.stringify(validatedParams),
@@ -44,9 +40,6 @@ export async function _otpNew(this: any, params: OTPNewParams): Promise<any> {
 
 	return this.parse({
 		response,
-		schemas: {
-			sdk: OTPNewResponse,
-			raw: OTPNewResponseBuilder.raw
-		}
+		schema: OTPSendResponse
 	});
 }

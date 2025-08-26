@@ -41,7 +41,7 @@ import { ContiguitySDKError } from "@/types/error";
  * });
  * 
  * // Send and verify OTP
- * const otpResponse = await contiguity.otp.new({
+ * const otpResponse = await contiguity.otp.send({
  *   to: "+1234567890",
  *   language: "en",
  *   name: "MyApp"
