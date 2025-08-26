@@ -5,7 +5,7 @@ import { ContiguityAPIError, ContiguityError } from "@/types/error";
 
 // year | month | version (monthly) 
 const LATEST_API_VERSION = "v2025.8.20";
-const BASE_URL = "http://localhost:8080";
+const BASE_URL = "https://api.contiguity.com" // "http://localhost:8080";
 
 export interface ContiguityClientOptions {
     raw?: boolean;
