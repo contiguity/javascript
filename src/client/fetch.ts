@@ -92,8 +92,8 @@ export class ContiguityClient {
         response: any;
         schema: T;
     }): any {
-        // Parse the response data
-        const responseData = schema.parse(response);
+        // Parse the response data (schema validates response.data, not the full response)
+        const responseData = schema.parse(response.data || response);
         
         // Return flattened response with metadata
         return {
