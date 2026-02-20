@@ -1,0 +1,45 @@
+{
+    "name": "contiguity",
+    "version": "0.0.8",
+    "description": "Contiguity JavaScript/TypeScript SDK",
+    "type": "module",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.js",
+            "default": "./dist/index.js"
+        }
+    },
+    "files": [
+        "dist"
+    ],
+    "scripts": {
+        "build": "tsc",
+        "test": "bun run build && vitest run",
+        "prepublishOnly": "tsc",
+        "pack": "bun pm pack",
+        "publish:dry": "bun run build && bun publish --dry-run"
+    },
+    "keywords": [
+        "contiguity",
+        "sms",
+        "email",
+        "otp",
+        "imessage",
+        "whatsapp"
+    ],
+    "license": "MIT",
+    "dependencies": {
+        "zod": "^4.3.6"
+    },
+    "devDependencies": {
+        "@types/node": "^22.19.11",
+        "typescript": "^5.9.3",
+        "vitest": "^3.2.4"
+    },
+    "engines": {
+        "node": ">=18"
+    }
+}
