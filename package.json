@@ -1,6 +1,6 @@
 {
     "name": "contiguity",
-    "version": "0.0.8",
+    "version": "0.0.6",
     "description": "Contiguity JavaScript/TypeScript SDK",
     "type": "module",
     "main": "dist/index.js",
@@ -20,7 +20,8 @@
         "test": "bun run build && vitest run",
         "prepublishOnly": "tsc",
         "pack": "bun pm pack",
-        "publish:dry": "bun run build && bun publish --dry-run"
+        "publish:dry": "bun run build && bun publish --dry-run",
+        "publish": "bun run build && npm publish"
     },
     "keywords": [
         "contiguity",
