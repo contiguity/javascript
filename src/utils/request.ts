@@ -40,11 +40,20 @@ export async function request<T = Record<string, unknown>>(
         headers,
         body: options.body ? JSON.stringify(options.body) : undefined,
     });
-    const json = (await res.json()) as RawApiResponse & { data?: { error?: string; status?: number } };
+    const json = (await res.json()) as RawApiResponse & {
+        data?: { error?: string; status?: number };
+        message?: string;
+        status?: number;
+    };
     if (!res.ok) {
-        const errMsg = json.data?.error ?? json.object ?? "Unknown error";
-        const status = json.data?.status ?? res.status;
-        throw new ContiguityError(errMsg as string, status);
+        // Default API shape: data: { error, status }. Occasional: { message, status } at top level.
+        const errMsg =
+            json.data?.error ??
+            json.message ??
+            json.object ??
+            "Unknown error";
+        const status = json.data?.status ?? json.status ?? res.status;
+        throw new ContiguityError(errMsg, status);
     }
     return transformResponse(json as RawApiResponse) as T & {
         metadata: { id: string; timestamp: string; api_version: string; object: string };
