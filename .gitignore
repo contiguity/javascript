@@ -196,3 +196,5 @@ scripts/lldb-inline
 cmake/sources/*.txt
 
 .env.test
+
+openapi/

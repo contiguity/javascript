@@ -8,6 +8,7 @@ const BASE_URLS = {
     numbers: "https://api.contiguity.com/numbers",
     conversations: "https://api.contiguity.com/conversations",
     voice: "https://api.contiguity.com/voice",
+    entitlements: "https://api.contiguity.com/entitlements",
 } as const;
 
 export type ApiBase = keyof typeof BASE_URLS;
@@ -53,7 +54,11 @@ export async function request<T = Record<string, unknown>>(
             json.object ??
             "Unknown error";
         const status = json.data?.status ?? json.status ?? res.status;
-        throw new ContiguityError(errMsg, status);
+        const data =
+            json.data?.agreement_url != null
+                ? { agreement_url: String(json.data.agreement_url) }
+                : undefined;
+        throw new ContiguityError(errMsg, status, undefined, data);
     }
     return transformResponse(json as RawApiResponse) as T & {
         metadata: { id: string; timestamp: string; api_version: string; object: string };

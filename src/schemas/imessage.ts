@@ -12,6 +12,7 @@ export const imessageSendSchema = z
             })
             .optional(),
         attachments: z.array(z.string()).optional(),
+        fast_track: z.boolean().optional(),
     })
     .loose();
 

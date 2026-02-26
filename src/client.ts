@@ -3,6 +3,8 @@ import { EmailResource } from "./resources/email.js";
 import { OtpResource } from "./resources/otp.js";
 import { DomainsResource } from "./resources/domains.js";
 import { LeaseResource } from "./resources/lease.js";
+import { EntitlementsResource } from "./resources/entitlements.js";
+import { AgreementsResource } from "./resources/agreements.js";
 import { ImessageResource } from "./resources/imessage.js";
 import { WhatsappResource } from "./resources/whatsapp.js";
 // import { VoiceResource } from "./resources/voice.js";
@@ -19,6 +21,8 @@ export class Contiguity {
     readonly otp: OtpResource;
     readonly domains: DomainsResource;
     readonly lease: LeaseResource;
+    readonly entitlements: EntitlementsResource;
+    readonly agreements: AgreementsResource;
     readonly imessage: ImessageResource;
     readonly whatsapp: WhatsappResource;
     // readonly voice: VoiceResource;
@@ -45,6 +49,8 @@ export class Contiguity {
         this.otp = new OtpResource({ ...request_config, base: "otp" });
         this.domains = new DomainsResource({ ...request_config, base: "domains" });
         this.lease = new LeaseResource({ ...request_config, base: "numbers" });
+        this.entitlements = new EntitlementsResource({ ...request_config, base: "entitlements" });
+        this.agreements = new AgreementsResource(this.entitlements);
         this.imessage = new ImessageResource(request_config);
         this.whatsapp = new WhatsappResource(request_config);
         // this.voice = new VoiceResource({ ...request_config, base: "voice" });
