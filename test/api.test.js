@@ -9,6 +9,8 @@ const test_from = process.env.CONTIGUITY_TEST_FROM
 const test_email = process.env.CONTIGUITY_TEST_EMAIL
 const test_email_from_name = process.env.CONTIGUITY_TEST_EMAIL_FROM_NAME ?? "SDK Test"
 
+const hasReactEmail = await import("@react-email/render").then(() => true).catch(() => false)
+
 let sent_text_message_id
 
 describe("API (live)", () => {
@@ -108,6 +110,21 @@ describe("API (live)", () => {
 			from: test_email_from_name,
 			subject: "Contiguity SDK test",
 			body: { text: "Test email from SDK" },
+		})
+		expect(res).toBeDefined()
+		expect(res.email_id).toBeDefined()
+		expect(typeof res.email_id).toBe("string")
+		expect(res.metadata).toBeDefined()
+	})
+
+	test.skipIf(!hasKey || !test_email || !hasReactEmail)("send email with react", async () => {
+		const React = (await import("react")).default
+		const c = new Contiguity(API_KEY)
+		const res = await c.email.send({
+			to: test_email,
+			from: test_email_from_name,
+			subject: "Contiguity SDK test (React)",
+			react: React.createElement("div", null, "Hello from React Email test"),
 		})
 		expect(res).toBeDefined()
 		expect(res.email_id).toBeDefined()

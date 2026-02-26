@@ -47,7 +47,7 @@ const response = await contiguity.email.send({
     to: "user@example.com", 
     from: "Your App <no-reply@yourapp.com>",
     subject: "Welcome!",
-    body: { text: "Welcome to our platform!" }
+    text: "Welcome to our platform!"
 });
 ```
 

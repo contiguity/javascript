@@ -15,6 +15,7 @@ export type {
 } from "./types/webhooks.js";
 export type { TextSendParams, TextReactParams } from "./schemas/text.js";
 export type { EmailSendParams } from "./schemas/email.js";
+export { renderReactEmail } from "./utils/react-email.js";
 export type { OtpNewParams, OtpVerifyParams, OtpResendParams, OtpReverseInitiateParams } from "./schemas/otp.js";
 export type {
     ImessageSendParams,
