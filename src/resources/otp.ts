@@ -1,11 +1,11 @@
 import { request } from "../utils/request.js";
 import type { RequestConfig } from "../utils/request.js";
 import {
-  otpNewSchema,
+  otpSendSchema,
   otpVerifySchema,
   otpResendSchema,
   otpReverseInitiateSchema,
-  type OtpNewParams,
+  type OtpSendParams,
   type OtpVerifyParams,
   type OtpResendParams,
   type OtpReverseInitiateParams,
@@ -14,12 +14,17 @@ import {
 export class OtpResource {
   constructor(private readonly config: RequestConfig) {}
 
-  async new(params: OtpNewParams) {
-    const parsed = otpNewSchema.parse(params);
+  async send(params: OtpSendParams) {
+    const parsed = otpSendSchema.parse(params);
     return request<{ otp_id: string }>(this.config, "/new", {
       method: "POST",
       body: parsed as Record<string, unknown>,
     });
+  }
+
+  /** @deprecated Use send() instead. */
+  async new(params: OtpSendParams) {
+    return this.send(params);
   }
 
   async verify(params: OtpVerifyParams) {

@@ -21,7 +21,13 @@ export const emailSendSchema = z
         reply_to: z.string().nullable().optional(),
         cc: z.union([z.string(), z.array(z.string()).max(10)]).nullable().optional(),
         bcc: z.union([z.string(), z.array(z.string()).max(10)]).nullable().optional(),
-        headers: z.record(z.string(), z.string()).nullable().optional(),
+        headers: z
+            .union([
+                z.record(z.string(), z.string()),
+                z.array(z.object({ name: z.string(), value: z.string() })),
+            ])
+            .nullable()
+            .optional(),
     })
     .refine(
         (p) => {

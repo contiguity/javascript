@@ -1,6 +1,8 @@
 import { z } from "zod";
 
-export const otpNewSchema = z.object({ to: z.string(), language: z.string(), name: z.string() }).loose();
+export const otpSendSchema = z.object({ to: z.string(), language: z.string(), name: z.string().optional() }).loose();
+/** @deprecated Use otpSendSchema instead. */
+export const otpNewSchema = otpSendSchema;
 export const otpVerifySchema = z.object({ otp_id: z.string(), otp: z.string() }).loose();
 export const otpResendSchema = z.object({ otp_id: z.string() }).loose();
 export const otpReverseInitiateSchema = z
@@ -13,7 +15,9 @@ export const otpReverseInitiateSchema = z
     })
     .loose();
 
-export type OtpNewParams = z.infer<typeof otpNewSchema>;
+export type OtpSendParams = z.infer<typeof otpSendSchema>;
+/** @deprecated Use OtpSendParams instead. */
+export type OtpNewParams = OtpSendParams;
 export type OtpVerifyParams = z.infer<typeof otpVerifySchema>;
 export type OtpResendParams = z.infer<typeof otpResendSchema>;
 export type OtpReverseInitiateParams = z.infer<typeof otpReverseInitiateSchema>;

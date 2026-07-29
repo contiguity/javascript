@@ -1,12 +1,16 @@
 import { request } from "../utils/request.js";
-import { leaseCreateSchema, type LeaseCreateOptions } from "../schemas/leases.js";
+import {
+  leaseCreateSchema,
+  type LeaseAvailableResponse,
+  type LeaseCreateOptions,
+} from "../schemas/leases.js";
 import type { RequestConfig } from "../utils/request.js";
 
 export class LeaseResource {
   constructor(private readonly config: RequestConfig) {}
 
   async available() {
-    return request(this.config, "/leases", { method: "GET" });
+    return request<LeaseAvailableResponse>(this.config, "/leases", { method: "GET" });
   }
 
   async get(number: string) {

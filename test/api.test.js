@@ -109,7 +109,7 @@ describe("API (live)", () => {
 			to: test_email,
 			from: test_email_from_name,
 			subject: "Contiguity SDK test",
-			body: { text: "Test email from SDK" },
+			text: "Test email from SDK",
 		})
 		expect(res).toBeDefined()
 		expect(res.email_id).toBeDefined()
