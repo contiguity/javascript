@@ -73,6 +73,6 @@ For complete documentation, examples, and API reference, visit [docs.contiguity.
 ## Resources
 
 - [API Reference](https://docs.contiguity.com/api-reference/) - Complete API documentation
-- [Console](https://console.contiguity.com/) - Manage your account and API keys  
+- [Console](https://console.contiguity.com/) - Manage your account and API keys, see usage, apply for entitlements, and more
 - [Discord Community](https://discord.gg/Z9K5XAsS7H) - Get support and connect with other developers
 - [GitHub Repository](https://github.com/contiguity/javascript) - Source code and issue tracking
