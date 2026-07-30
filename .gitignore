@@ -198,3 +198,6 @@ cmake/sources/*.txt
 .env.test
 
 openapi/
+
+/contiguity-*.tgz
+/.published-*/
