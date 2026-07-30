@@ -9,6 +9,9 @@ import {
   type OtpVerifyParams,
   type OtpResendParams,
   type OtpReverseInitiateParams,
+  type OtpReverseInitiateResponse,
+  type OtpReverseVerifyResponse,
+  type OtpReverseCancelResponse,
 } from "../schemas/otp.js";
 
 export class OtpResource {
@@ -46,16 +49,24 @@ export class OtpResource {
   readonly reverse = {
     initiate: (params: OtpReverseInitiateParams) => {
       const parsed = otpReverseInitiateSchema.parse(params);
-      return request(this.config, "/reverse/initiate", {
+      return request<OtpReverseInitiateResponse>(this.config, "/reverse/initiate", {
         method: "POST",
         body: parsed as Record<string, unknown>,
       });
     },
     verify: (otp_id: string) => {
-      return request(this.config, `/reverse/verify/${encodeURIComponent(otp_id)}`, { method: "GET" });
+      return request<OtpReverseVerifyResponse>(
+        this.config,
+        `/reverse/verify/${encodeURIComponent(otp_id)}`,
+        { method: "GET" }
+      );
     },
     cancel: (otp_id: string) => {
-      return request(this.config, `/reverse/cancel/${encodeURIComponent(otp_id)}`, { method: "POST" });
+      return request<OtpReverseCancelResponse>(
+        this.config,
+        `/reverse/cancel/${encodeURIComponent(otp_id)}`,
+        { method: "POST" }
+      );
     },
   };
 }

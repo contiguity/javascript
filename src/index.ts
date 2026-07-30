@@ -12,6 +12,7 @@ export type {
   TextIncomingData,
   ImessageIncomingData,
   TextDeliveryData,
+  OtpReverseVerifiedData,
 } from "./types/webhooks.js";
 export type { TextSendParams, TextReactParams } from "./schemas/text.js";
 export type { EmailSendParams } from "./schemas/email.js";
@@ -21,7 +22,11 @@ export type {
   OtpNewParams,
   OtpVerifyParams,
   OtpResendParams,
+  OtpReverseService,
   OtpReverseInitiateParams,
+  OtpReverseInitiateResponse,
+  OtpReverseVerifyResponse,
+  OtpReverseCancelResponse,
 } from "./schemas/otp.js";
 export type {
   AvailableLeaseNumber,

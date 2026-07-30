@@ -52,6 +52,13 @@ export interface TextDeliveryData {
     error?: string;
 }
 
+/** otp.reverse.verified */
+export interface OtpReverseVerifiedData {
+    otp_id: string;
+    number: string;
+    status: "verified";
+}
+
 /** Minimal data for reply() - has to/from. Used by text, imessage, whatsapp. */
 export interface IncomingMessageData {
     to: string;
