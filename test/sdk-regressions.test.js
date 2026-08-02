@@ -157,4 +157,38 @@ describe("SDK regressions", function sdkRegressions() {
 		})).toThrow()
 		expect(fetch_mock).not.toHaveBeenCalled()
 	})
+
+	test("conversation reads optionally request tracking", async function conversationTracking() {
+		const fetch_mock = vi.fn(async function fetchConversation() {
+			return apiResponse({})
+		})
+		vi.stubGlobal("fetch", fetch_mock)
+		const contiguity = new Contiguity("contiguity_sk_test")
+
+		await contiguity.text.get("text_test", { tracking: true })
+		await contiguity.text.history({
+			to: "+13059478667",
+			from: "+13059478668",
+			tracking: true,
+		})
+		await contiguity.imessage.get("imessage_test", { tracking: null })
+		await contiguity.imessage.history({
+			to: "+13059478667",
+			from: "+13059478668",
+			tracking: false,
+		})
+
+		expect(fetch_mock.mock.calls[0][0]).toBe(
+			"https://api.contiguity.com/conversations/history/message/text_test?tracking=true"
+		)
+		expect(fetch_mock.mock.calls[1][0]).toBe(
+			"https://api.contiguity.com/conversations/history/text/%2B13059478667/%2B13059478668/20?tracking=true"
+		)
+		expect(fetch_mock.mock.calls[2][0]).toBe(
+			"https://api.contiguity.com/conversations/history/message/imessage_test"
+		)
+		expect(fetch_mock.mock.calls[3][0]).toBe(
+			"https://api.contiguity.com/conversations/history/imessage/%2B13059478667/%2B13059478668/20"
+		)
+	})
 })

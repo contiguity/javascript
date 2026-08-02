@@ -40,4 +40,7 @@ export type {
     ImessageReadParams,
 } from "./schemas/imessage.js";
 export type { WhatsappSendParams, WhatsappTypingParams, WhatsappReactParams } from "./schemas/whatsapp.js";
-export type { ConversationHistoryParams } from "./schemas/conversations.js";
+export type {
+  ConversationGetParams,
+  ConversationHistoryParams,
+} from "./schemas/conversations.js";

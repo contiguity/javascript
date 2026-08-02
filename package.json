@@ -1,6 +1,6 @@
 {
   "name": "contiguity",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Contiguity JavaScript/TypeScript SDK",
   "type": "module",
   "main": "dist/index.js",

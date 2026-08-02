@@ -7,7 +7,9 @@ import {
     type TextReactParams,
 } from "../schemas/text.js";
 import {
+    conversationGetSchema,
     conversationHistorySchema,
+    type ConversationGetParams,
     type ConversationHistoryParams,
 } from "../schemas/conversations.js";
 import type { RequestConfig } from "../utils/request.js";
@@ -33,10 +35,12 @@ export class TextResource {
         });
     }
 
-    async get(id: string) {
+    async get(id: string, params: ConversationGetParams = {}) {
+        const parsed = conversationGetSchema.parse(params);
+        const tracking = parsed.tracking ? "?tracking=true" : "";
         return request(
             { ...this.config, base: "conversations" as const },
-            `/history/message/${encodeURIComponent(id)}`,
+            `/history/message/${encodeURIComponent(id)}${tracking}`,
             { method: "GET" }
         );
     }
@@ -44,9 +48,10 @@ export class TextResource {
     async history(params: ConversationHistoryParams) {
         const parsed = conversationHistorySchema.parse(params);
         const limit = parsed.limit ?? 20;
+        const tracking = parsed.tracking ? "?tracking=true" : "";
         return request(
             { ...this.config, base: "conversations" as const },
-            `/history/text/${encodeURIComponent(parsed.to)}/${encodeURIComponent(parsed.from)}/${limit}`,
+            `/history/text/${encodeURIComponent(parsed.to)}/${encodeURIComponent(parsed.from)}/${limit}${tracking}`,
             { method: "GET" }
         );
     }
