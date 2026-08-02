@@ -29,9 +29,18 @@ export type {
   OtpReverseCancelResponse,
 } from "./schemas/otp.js";
 export type {
+  AvailableFilters,
   AvailableLeaseNumber,
+  AvailableOptions,
   LeaseAvailableResponse,
   LeaseCreateOptions,
+  LeaseFilters,
+  LeasedNumber,
+  LeasedOptions,
+  LeasedResponse,
+  LeaseStatus,
+  NumberFilters,
+  NumberStatus,
 } from "./schemas/leases.js";
 export type {
     ImessageSendParams,

@@ -1,8 +1,10 @@
 import { z } from "zod";
 
+export type NumberStatus = "available" | "g-available" | "leased" | "unavailable";
+
 export interface AvailableLeaseNumber {
     id: string;
-    status: string;
+    status: NumberStatus;
     number: {
         e164: string;
         formatted: string;
@@ -37,6 +39,43 @@ export interface AvailableLeaseNumber {
 export interface LeaseAvailableResponse {
     available: number;
     numbers: AvailableLeaseNumber[];
+}
+
+export type LeaseStatus = "active" | "expired" | "terminated";
+
+export interface LeasedNumber extends AvailableLeaseNumber {
+    lease_id: string;
+    lease_status: LeaseStatus;
+}
+
+export interface LeasedResponse {
+    leased: number;
+    numbers: LeasedNumber[];
+}
+
+export interface NumberFilters {
+    capabilities?: string[];
+    location?: {
+        country?: string;
+        region?: string;
+        city?: string;
+    };
+}
+
+export interface AvailableFilters extends NumberFilters {
+    status?: NumberStatus;
+}
+
+export interface AvailableOptions {
+    filter?: AvailableFilters;
+}
+
+export interface LeaseFilters extends NumberFilters {
+    status?: LeaseStatus;
+}
+
+export interface LeasedOptions {
+    filter?: LeaseFilters;
 }
 
 export const leaseCreateSchema = z

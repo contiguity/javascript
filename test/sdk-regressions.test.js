@@ -45,6 +45,107 @@ describe("SDK regressions", function sdkRegressions() {
 		expect(response.numbers[0].created_at).toBe("2026-07-29T12:00:00.000Z")
 	})
 
+	test("lease.available filters by status, capabilities, and location", async function availableFilters() {
+		const number = {
+			id: "+13059478667",
+			status: "available",
+			capabilities: { channels: ["sms", "imessage"] },
+			location: { country: "US", region: "FL", city: "Miami" },
+		}
+		vi.stubGlobal("fetch", vi.fn(async function fetchAvailable() {
+			return apiResponse({
+				available: 4,
+				numbers: [
+					number,
+					{ ...number, id: "+13059478668", status: "g-available" },
+					{
+						...number,
+						id: "+13059478669",
+						capabilities: { channels: ["sms"] },
+					},
+					{
+						...number,
+						id: "+13059478670",
+						location: { country: "US", region: "FL", city: "Orlando" },
+					},
+				],
+			})
+		}))
+
+		const response = await new Contiguity("contiguity_sk_test").lease.available({
+			filter: {
+				status: "available",
+				capabilities: ["sms", "imessage"],
+				location: {
+					country: "US",
+					region: "FL",
+					city: "Miami",
+				},
+			},
+		})
+
+		expect(response.available).toBe(1)
+		expect(response.numbers).toEqual([number])
+	})
+
+	test("lease.leased filters by status, capabilities, and location", async function leasedFilters() {
+		const number = {
+			id: "+13059478667",
+			status: "leased",
+			number: { e164: "+13059478667", formatted: "+1 (305) 947-8667" },
+			location: { country: "US", region: "FL", city: "Miami" },
+			carrier: "Contiguity",
+			capabilities: { intl_sms: false, channels: ["sms", "imessage"] },
+			health: { reputation: 0.9, previous_owners: 1 },
+			data: {},
+			created_at: "2026-07-29T12:00:00.000Z",
+			pricing: { currency: "USD", upfront_fee: 2.99, monthly_rate: 19.99 },
+			lease_id: "lsd_active",
+			lease_status: "active",
+		}
+		vi.stubGlobal("fetch", vi.fn(async function fetchLeased() {
+			return apiResponse({
+				leased: 4,
+				numbers: [
+					number,
+					{
+						...number,
+						id: "+13059478668",
+						lease_id: "lsd_expired",
+						lease_status: "expired",
+					},
+					{
+						...number,
+						id: "+13059478669",
+						capabilities: { intl_sms: false, channels: ["sms"] },
+						lease_id: "lsd_sms",
+					},
+					{
+						...number,
+						id: "+13059478670",
+						location: { country: "US", region: "FL", city: "Orlando" },
+						lease_id: "lsd_orlando",
+					},
+				],
+			})
+		}))
+
+		const response = await new Contiguity("contiguity_sk_test").lease.leased({
+			filter: {
+				status: "active",
+				capabilities: ["sms", "imessage"],
+				location: {
+					country: "US",
+					region: "FL",
+					city: "Miami",
+				},
+			},
+		})
+
+		expect(response.leased).toBe(1)
+		expect(response.numbers).toEqual([number])
+	})
+
 	test("email sends documented content at the top level", async function emailTopLevel() {
 		const fetch_mock = vi.fn(async function fetchEmail() {
 			return apiResponse({ email_id: "email_test" })
